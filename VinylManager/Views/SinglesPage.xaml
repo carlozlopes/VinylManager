@@ -1,0 +1,283 @@
+﻿<Page
+    x:Class="VinylManager.Views.SinglesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VinylManager.Views"
+    xmlns:mvvm="using:VinylManager.MVVM"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:conv="using:VinylManager.Converters"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <mvvm:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+        <mvvm:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <mvvm:BooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter" IsReversed="True" />
+    </Page.Resources>
+
+    <StackPanel Margin="5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                <AppBarToggleButton Icon="Add"
+                                    Label="New"
+                                    IsEnabled="{Binding IsInEditMode, Converter={StaticResource BooleanNegationConverter}}"
+                                    x:Name="NewSingle"
+                                    Click="AddButton_Click" />
+                <AppBarToggleButton Icon="Edit"
+                                    Label="Edit"
+                                    x:Name="EditSingle"
+                                    Click="EditButton_Click"
+                                    IsEnabled="False" />
+                <AppBarButton Icon="Delete"
+                              Label="Delete"
+                              x:Name="DeleteSingle"
+                              Click="DeleteButton_Click"
+                              IsEnabled="False" />
+            </StackPanel>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Width="300"
+                         Height="30"
+                         x:Name="ArtisteInput"
+                         IsEnabled="{Binding IsInEditMode, Converter={StaticResource BooleanNegationConverter}}"
+                         HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
+                <Button  Click="SelectArtisteButton_Click"
+                         IsEnabled="{Binding IsInEditMode, Converter={StaticResource BooleanNegationConverter}}"
+                    	 Content="Select Artiste" Margin="301,1,0,1" Width="165" Grid.Column="1" Grid.Row="0" />
+                <Button Click="resetArtiste_Click" x:Name="resetArtiste"
+                         IsEnabled="{Binding IsInEditMode, Converter={StaticResource BooleanNegationConverter}}"
+                    	 Content="Reset" Margin="478.25,1,0,1" Width="165" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>
+                <SearchBox QuerySubmitted="SearchBox_QuerySubmitted"
+                           SearchHistoryEnabled="False"
+                           IsEnabled="{Binding IsInEditMode, Converter={StaticResource BooleanNegationConverter}}"
+                           x:Name="SearchBox"
+                           Width="800"
+                           Height="30"
+                           Margin="10,10,-210,10"
+                           Grid.Row="1" Grid.ColumnSpan="2"/>
+            </Grid>
+        </Grid>
+        <Grid Background="SlateGray" Height="670">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="340" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ListView SelectionMode="Single"
+                      Width="300"
+                      ItemsSource="{Binding}"
+                      SelectionChanged="SinglesListView_SelectionChanged"
+                      Grid.Column="0"
+                      x:Name="SinglesListView"
+                      IsItemClickEnabled="False"
+                      Background="RoyalBlue"
+                      Margin="15,15,25,10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="110" Margin="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
+                                <TextBlock Text="{Binding Nom}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding Artiste}" TextWrapping="NoWrap"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Border x:Name="SingleBorder" Grid.Column="1" Margin="20,17,20,-17">
+                <Grid DataContext="{Binding}" Margin="10,0,-10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="651" />
+                        <ColumnDefinition Width="49"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="80" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Id"
+                               Grid.Column="0"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" />
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding Id}"
+                               x:Name="Id"
+                               FontSize="20" Margin="0,1,23,9" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="2"
+                               Text="Nom"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="0,10,0,0" Width="40" />
+                    <TextBox   Grid.Column="1"
+                               Grid.Row="2"
+                               HorizontalAlignment="Left"
+                               Width="250"
+                               x:Name="Nom"
+                               IsReadOnly="True"
+                               Text="{Binding Nom, Mode=TwoWay}"
+                               FontSize="20" />
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="4"
+                               Text="Face A"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="4"
+                               Text="Nom"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="4"
+                             HorizontalAlignment="Left"
+                             Width="250"
+                             x:Name="FaceA"
+                             IsReadOnly="False"
+                             FontSize="20"
+                             Margin="60,1,0,1" />
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="4"
+                               Text="Année"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="320,10,0,0" Width="100" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="4"
+                             HorizontalAlignment="Left"
+                             Width="70"
+                             x:Name="AnneeFaceA"
+                             IsReadOnly="False"
+                             FontSize="20"
+                             Margin="390,1,0,1" />
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="6"
+                               Text="Face B"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="6"
+                               Text="Nom"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="6"
+                             HorizontalAlignment="Left"
+                             Width="250"
+                             x:Name="FaceB"
+                             IsReadOnly="False"
+                             FontSize="20"
+                             Margin="60,1,0,1" />
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="6"
+                               Text="Année"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="320,10,0,0" Width="100" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="6"
+                             HorizontalAlignment="Left"
+                             Width="70"
+                             x:Name="AnneeFaceB"
+                             IsReadOnly="False"
+                             FontSize="20"
+                             Margin="390,1,0,1" />
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="8"
+                               Text="Artiste"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="8"
+                             Width="250"
+                             IsReadOnly="False"
+                             x:Name="SelectArtisteInput"
+                             HorizontalAlignment="Left" />
+                    <Button  Grid.Column="1"
+                             Grid.Row="8"
+                             IsEnabled="true"
+                             x:Name="AddArtistToSingleButton"
+                             Click="AddArtistToSingleButton_Click"
+                             Content="Select Artiste" Margin="260,2,0,0" />
+                    <StackPanel Grid.Row="12" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <AppBarButton Icon="Accept" x:Name="SaveSingle" IsEnabled="True" Click="AcceptButton_Click" />
+                        <AppBarButton Icon="Cancel" x:Name="ClearSingleInfo" IsEnabled="True" Click="CancelButton_Click_1" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Popup x:Name="SelectArtistePopUp"
+                   Closed="SelectArtistePopUp_Closed"
+                   IsOpen="False"
+                   IsLightDismissEnabled="True">
+                <Popup.ChildTransitions>
+                    <TransitionCollection>
+                        <PaneThemeTransition />
+                    </TransitionCollection>
+                </Popup.ChildTransitions>
+                <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" BorderThickness="2"
+                        Background="{StaticResource ApplicationPageBackgroundThemeBrush}" x:Name="SelectArtistePopUpBorder">
+                    <StackPanel Orientation="Vertical" Background="DarkBlue" Height="400" x:Name="popArtiste">
+                        <StackPanel>
+                            <SearchBox QuerySubmitted="ArtisteSearchBox_QuerySubmitted"
+                                       SearchHistoryEnabled="False"
+                                       x:Name="ArtisteSearchBox"
+                                       Margin="10"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <ListView SelectionMode="Single"
+                                     Height="400"
+                                     ItemsSource="{Binding}"
+                                     SelectionChanged="ArtistesListView_SelectionChanged"
+                                     IsItemClickEnabled="False"
+                                     x:Name="ArtistesListView"
+                                     Margin="10">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
+                                            <TextBlock Text="{Binding Nom}" TextWrapping="NoWrap"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Border>
+            </Popup>
+        </Grid>
+    </StackPanel>
+</Page>

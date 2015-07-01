@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="VinylManager.NavigationControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VinylManager"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="399">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Horizontal">
+        <AppBarButton Icon="Find" Label="Find" Click="NavButton_Click" Tag="VinylManager.Views.MainPage" />
+        <AppBarButton Icon="Admin" Label="Admin" Click="NavButton_Click" Tag="VinylManager.Views.AdminPage" />
+        <AppBarButton Icon="Tag" Label="Etiquettes" Click="NavButton_Click" Tag="VinylManager.Views.EtiquettesPage" />
+        <AppBarButton Icon="Import" Label="Import Titres" Click="NavButton_Click" Tag="VinylManager.Views.ImportPage" />
+        <!-- Add more buttons here as needed for new pages. -->
+        <!-- Assign the fully qualified page name to the button's Tag property. -->
+    </StackPanel>
+</UserControl>
