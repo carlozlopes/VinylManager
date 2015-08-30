@@ -60,7 +60,6 @@
                       Width="300"
                       ItemsSource="{Binding}"
                       SelectionChanged="TitresListView_SelectionChanged"
-                      IsItemClickEnabled="True"
                       Grid.Column="0"
                       x:Name="TitresListView"
                       Background="RoyalBlue"
