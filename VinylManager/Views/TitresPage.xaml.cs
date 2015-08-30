@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -44,39 +45,51 @@ namespace VinylManager.Views
         {
             selectedTitre = (TitreViewModel)TitresListView.SelectedItem;
 
-            titresViewModel.Select_Childs_Selected_Titre(selectedTitre);
-            TitreBorder.DataContext = selectedTitre;
-
-            EditTitre.IsEnabled = true;
-            DeleteTitre.IsEnabled = true;
+            if (null != selectedTitre)
+            {
+                titresViewModel.Select_Childs_Selected_Titre(selectedTitre);
+                TitreBorder.DataContext = selectedTitre;
+                EditTitre.IsEnabled = true;
+                DeleteTitre.IsEnabled = true;
+            }
+            NewTitre.IsChecked = false;
+            EditTitre.IsChecked = false;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            this.DeleteTitre.IsEnabled = true;
             TitreViewModel newTitre = new TitreViewModel();
             newTitre.IsInEditMode = true;
             TitreBorder.DataContext = newTitre;
-            NewTitre.IsChecked = true;
-            EditTitre.IsChecked = false;
+            topButtonBarClicked();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             selectedTitre.IsInEditMode = true;
-            EditTitre.IsChecked = true;
-            NewTitre.IsChecked = false;
+            topButtonBarClicked();
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            Titre face = TitreService.GetTitreById(Convert.ToInt32(Id.Text));
-            TitresListView.DataContext = titresViewModel.deleteTitre(face);
-            TitreBorder.DataContext = null;
-            NewTitre.IsChecked = false;
-            EditTitre.IsChecked = false;
-            EditTitre.IsEnabled = false;
-            DeleteTitre.IsEnabled = false;
+            topButtonBarClicked();
+            MessageDialog message = new MessageDialog("Do you want to delete the selected titre?");
+
+            message.Commands.Add(new UICommand(
+                "OK",
+                new UICommandInvokedHandler(this.AcceptDeleteEventHandler)));
+
+            message.Commands.Add(new UICommand(
+                "NO",
+                new UICommandInvokedHandler(this.CancelDeleteEventHandler)));
+
+            // Set the command that will be invoked by default
+            message.DefaultCommandIndex = 0;
+
+            // Set the command to be invoked when escape is pressed
+            message.CancelCommandIndex = 1;
+
+            await message.ShowAsync();
         }
 
         private void AcceptButton_Click(object sender, RoutedEventArgs e)
@@ -97,23 +110,72 @@ namespace VinylManager.Views
             }
 
             TitresListView.DataContext = titresViewModel.saveTitre(titre);
-            resetAll();
+            topButtonBarClicked();
         }
 
         private void CancelButton_Click_1(object sender, RoutedEventArgs e)
         {
-            resetAll();
+            desactivateEditControlsAndResetTopBar();
         }
 
-        private void resetAll()
+        private void AcceptDeleteEventHandler(IUICommand command)
         {
+            Titre titre = TitreService.GetTitreById(Convert.ToInt32(Id.Text));
+            TitresListView.DataContext = titresViewModel.deleteTitre(titre);
+            desactivateEditControlsAndResetTopBar();
+        }
+
+        private void CancelDeleteEventHandler(IUICommand command)
+        {
+            desactivateEditControlsAndResetTopBar();
+        }
+
+        private void topButtonBarClicked()
+        {
+            if (true == NewTitre.IsChecked)
+            {
+                NewTitre.IsEnabled = true;
+                EditTitre.IsEnabled = false;
+                EditTitre.IsChecked = false;
+                DeleteTitre.IsEnabled = false;
+                activateEditControls();
+            }
+            else if (true == EditTitre.IsChecked)
+            {
+                EditTitre.IsEnabled = true;
+                NewTitre.IsChecked = false;
+                NewTitre.IsEnabled = false;
+                DeleteTitre.IsEnabled = false;
+                activateEditControls();
+            }
+            else
+            {
+                DeleteTitre.IsEnabled = true;
+                NewTitre.IsChecked = false;
+                NewTitre.IsEnabled = false;
+                EditTitre.IsChecked = false;
+                EditTitre.IsEnabled = false;
+            }
+        }
+
+        private void activateEditControls()
+        {
+            Nom.IsEnabled = true;
+        }
+
+        private void desactivateEditControlsAndResetTopBar()
+        {
+            SearchBox.QueryText = "";
             TitresListView.SelectedIndex = -1;
-            NewTitre.IsChecked = false;
-            EditTitre.IsChecked = false;
-            EditTitre.IsEnabled = false;
-            DeleteTitre.IsEnabled = false;
             selectedTitre = null;
             TitreBorder.DataContext = null;
+            NewTitre.IsEnabled = true;
+            NewTitre.IsChecked = false;
+            EditTitre.IsEnabled = false;
+            EditTitre.IsChecked = false;
+            DeleteTitre.IsEnabled = false;
+            Nom.IsEnabled = false;
+            Nom.Text = "";
         }
     }
 }

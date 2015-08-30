@@ -27,8 +27,6 @@
                         <MenuFlyoutItem Text="Singles" Tag="VinylManager.Views.SinglesPage" Click="Button_Click" />
                         <MenuFlyoutItem Text="Artistes" Tag="VinylManager.Views.ArtistesPage" Click="Button_Click" />
                         <MenuFlyoutItem Text="Titres" Tag="VinylManager.Views.TitresPage" Click="Button_Click" />
-                        <MenuFlyoutItem Text="Genres Musicaux" Tag="VinylManager.Views.GenresMusicauxPage" Click="Button_Click" />
-                        <MenuFlyoutItem Text="Qualité Artiste" Tag="VinylManager.Views.QualitesPage" Click="Button_Click" />
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>

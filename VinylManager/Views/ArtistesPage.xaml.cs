@@ -151,7 +151,7 @@ namespace VinylManager.Views
 
         private void CancelDeleteEventHandler(IUICommand command)
         {
-
+            desactivateEditControlsAndResetTopBar();
         }
 
         private void AcceptButton_Click(object sender, RoutedEventArgs e)
