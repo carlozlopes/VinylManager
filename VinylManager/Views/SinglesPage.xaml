@@ -92,7 +92,7 @@
                       Margin="15,15,25,10">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Height="110" Margin="6">
+                        <Grid Height="50" Margin="6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
