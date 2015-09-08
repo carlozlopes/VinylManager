@@ -66,7 +66,7 @@ namespace VinylManager.Views
             }
         }
 
-        private void ArtistesListView_ItemClick(object sender, ItemClickEventArgs e)
+        private void ArtistesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedArtiste = (ArtisteViewModel)ArtistesListView.SelectedItem;
         }

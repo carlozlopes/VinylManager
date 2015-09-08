@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
@@ -37,14 +37,14 @@
                            Margin="10,10,-210,10"
                            Grid.Column="4" Grid.ColumnSpan="2"/>
         </Grid>
-        <Grid Height="680" Grid.Row="1">
+        <Grid Height="680" Background="SlateGray" Grid.Row="1" Margin="10,4">
             <ListView SelectionMode="Single"
                       ItemsSource="{Binding}"
                       IsItemClickEnabled="True"
                       Grid.Column="0"
                       x:Name="SinglesListView"
                       Background="RoyalBlue"
-                      Margin="15,15,25,10" Grid.Row="1"
+                      Margin="15,15,400,10"
                       Height="auto">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -86,8 +86,8 @@
                         <ListView SelectionMode="Single"
                                      Height="400"
                                      ItemsSource="{Binding}"
-                                     ItemClick="ArtistesListView_ItemClick"
-                                     IsItemClickEnabled="True"
+                                     SelectionChanged="ArtistesListView_SelectionChanged"
+                                     IsItemClickEnabled="False"
                                      x:Name="ArtistesListView"
                                      Margin="10">
                             <ListView.ItemTemplate>
