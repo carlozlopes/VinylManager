@@ -52,11 +52,11 @@ namespace VinylManager.Services
             {
                 if (query.Equals(""))
                 {
-                    singles = db.Query<SinglesJoinData>("SELECT S.Id, S.Nom, A.Nom as Artiste, T.Nom as Titre, T.Annee FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId");
+                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.FaceAId, S.FaceBId, S.Nom, A.Nom as Artiste, T.Nom as Titre, T.Annee FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId GROUP BY S.FaceAId, S.FaceBId");
                 }
                 else
                 {
-                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.Nom, A.Nom as Artiste, T.Nom as Titre, T.Annee FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId WHERE T.Nom like '%" + query + "%'");
+                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.FaceAId, S.FaceBId, S.Nom, A.Nom as Artiste, T.Nom as Titre, T.Annee FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId WHERE T.Nom like '%" + query + "%' GROUP BY S.FaceAId, S.FaceBId");
                 }
 
             }
@@ -70,11 +70,11 @@ namespace VinylManager.Services
             {
                 if (query.Equals(""))
                 {
-                    singles = db.Query<SinglesJoinData>("SELECT S.Id, S.Nom, A.Nom as Artiste, T.Nom as Titre, T.Annee FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId WHERE A.Id = '" + artisteId + "'");
+                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.FaceAId, S.FaceBId, S.Nom, A.Nom as Artiste, T.Nom as Titre, T.Annee FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId WHERE A.Id = '" + artisteId + "' GROUP BY S.FaceAId, S.FaceBId");
                 }
                 else
                 {
-                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.Nom, A.Nom as Artiste, T.Nom as Titre, T.Annee FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId WHERE T.Nom like '%" + query + "%' AND A.Id = '" + artisteId + "'");
+                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.FaceAId, S.FaceBId, S.Nom, A.Nom as Artiste, T.Nom as Titre, T.Annee FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId WHERE T.Nom like '%" + query + "%' AND A.Id = '" + artisteId + "' GROUP BY S.FaceAId, S.FaceBId");
                 }
             }
             return singles;

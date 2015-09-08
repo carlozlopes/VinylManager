@@ -29,6 +29,8 @@ namespace VinylManager.Views
         SinglesSearchPageViewModel singlesSearchPageViewModel = new SinglesSearchPageViewModel();
         ArtisteViewModel selectedArtiste;
         SinglesViewModel singlesViewModel = new SinglesViewModel();
+        SingleViewModel selectedSingle = new SingleViewModel();
+        SingleJoinDataViewModel tempSingle = new SingleJoinDataViewModel();
 
         public SinglesSearchPage()
         {
@@ -74,6 +76,23 @@ namespace VinylManager.Views
         private void ArtisteSearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             ArtistesListView.DataContext = singlesSearchPageViewModel.Search_Artistes_Executed(args.QueryText);
+        }
+
+        private void SinglesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            tempSingle = (SingleJoinDataViewModel)SinglesListView.SelectedItem;
+
+            if (null != tempSingle)
+            {
+                selectedSingle = singlesViewModel.Select_Childs_Selected_Single(tempSingle.Id);
+
+                SingleBorder.DataContext = selectedSingle;
+                FaceA.Text = selectedSingle.FaceA.Nom;
+                AnneeFaceA.Text = selectedSingle.FaceA.Annee;
+                FaceB.Text = selectedSingle.FaceB.Nom;
+                AnneeFaceB.Text = selectedSingle.FaceB.Annee;
+                Artiste.Text = selectedSingle.Artiste.Nom;
+            }
         }
     }
 }

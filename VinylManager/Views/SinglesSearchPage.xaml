@@ -38,14 +38,18 @@
                            Grid.Column="4" Grid.ColumnSpan="2"/>
         </Grid>
         <Grid Height="680" Background="SlateGray" Grid.Row="1" Margin="10,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="650" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
             <ListView SelectionMode="Single"
                       ItemsSource="{Binding}"
-                      IsItemClickEnabled="True"
+                      IsItemClickEnabled="false"
                       Grid.Column="0"
                       x:Name="SinglesListView"
+                      SelectionChanged="SinglesListView_SelectionChanged"
                       Background="RoyalBlue"
-                      Margin="15,15,400,10"
-                      Height="auto">
+                      Margin="15,15,15,10">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Height="60" Margin="6">
@@ -63,6 +67,78 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Border x:Name="SingleBorder" Grid.Column="1" Margin="20,17,20,-17">
+                <Grid DataContext="{Binding}" Margin="10,0,-10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="50" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0" />
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Nom"
+                               Grid.Column="0"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Grid.RowSpan="2" />
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding Nom}"
+                               x:Name="Id"
+                               FontSize="20" Margin="0,1,23,9" Grid.RowSpan="3" Grid.ColumnSpan="2" />
+                    <TextBlock Text="Face A"
+                               Grid.Row="3"
+                               Grid.Column="0"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" />
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="1"
+                               Text="{Binding FaceA}"
+                               x:Name="FaceA"
+                               FontSize="20" Margin="0,1,23,9" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="2"
+                               Text="{Binding AnneeFaceA}"
+                               x:Name="AnneeFaceA"
+                               FontSize="20" Margin="10,1,23,9" />
+                    <TextBlock Text="Face B"
+                               Grid.Row="5"
+                               Grid.Column="0"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" />
+                    <TextBlock Grid.Row="5"
+                               Grid.Column="1"
+                               Text="{Binding FaceB}"
+                               x:Name="FaceB"
+                               FontSize="20" Margin="0,1,23,9" Grid.RowSpan="2" Grid.ColumnSpan="2" />
+                    <TextBlock Grid.Row="6"
+                               Grid.Column="2"
+                               Text="{Binding AnneeFaceB}"
+                               x:Name="AnneeFaceB"
+                               FontSize="20" Margin="10,1,23,9" />
+                    <TextBlock Text="Artiste"
+                               Grid.Row="7"
+                               Grid.Column="0"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" />
+                    <TextBlock Grid.Row="7"
+                               Grid.Column="1"
+                               Text="{Binding Artiste}"
+                               x:Name="Artiste"
+                               FontSize="20" Margin="0,1,23,9" Grid.ColumnSpan="2" />
+                </Grid>
+            </Border>
         </Grid>
         <Popup x:Name="SelectArtistePopUp"
                    Closed="SelectArtistePopUp_Closed"
