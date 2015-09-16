@@ -54,6 +54,42 @@
                       Grid.ColumnSpan="2"
                       HorizontalAlignment="Left"
                       Width="1130">
+                    <ListView.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid Height="50" Background="BlueViolet">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock 
+				                    Text="Artiste"
+				                    TextWrapping="Wrap"
+				                    Grid.Column="0"
+				                    FontSize="18"
+				                    HorizontalAlignment="Center"/>
+                                <TextBlock
+				                    Text="Nom"
+				                    TextWrapping="Wrap"
+				                    Grid.Column="1"
+				                    FontSize="18"
+				                    HorizontalAlignment="Center"/>
+                                <TextBlock
+				                    Text="Titre A"
+				                    TextWrapping="Wrap"
+				                    Grid.Column="2"
+				                    FontSize="18"
+				                    HorizontalAlignment="Center"/>
+                                <TextBlock
+				                    Text="Titre B"
+				                    TextWrapping="Wrap"
+				                    Grid.Column="3"
+				                    FontSize="18"
+				                    HorizontalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Height="60" Margin="6">
