@@ -87,7 +87,7 @@ namespace VinylManager.ViewModel
             }
         }
 
-        public string Titre
+        public string TitreA
         {
             get
             {
@@ -96,20 +96,20 @@ namespace VinylManager.ViewModel
                     return string.Empty;
                 }
 
-                return this.model.Titre;
+                return this.model.TitreA;
             }
 
             set
             {
                 if (this.model != null)
                 {
-                    this.model.Titre = value;
+                    this.model.TitreA = value;
                     this.OnPropertyChanged();
                 }
             }
         }
 
-        public string Annee
+        public string TitreB
         {
             get
             {
@@ -118,14 +118,14 @@ namespace VinylManager.ViewModel
                     return string.Empty;
                 }
 
-                return this.model.Annee;
+                return this.model.TitreB;
             }
 
             set
             {
                 if (this.model != null)
                 {
-                    this.model.Annee = value;
+                    this.model.TitreB = value;
                     this.OnPropertyChanged();
                 }
             }

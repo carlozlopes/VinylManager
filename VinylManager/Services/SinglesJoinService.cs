@@ -17,6 +17,41 @@ namespace VinylManager.Services
             {
                 if (query.Equals(""))
                 {
+                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.Nom, A.Nom as Artiste, S.FaceA as TitreA, S.FaceB as TitreB FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId");
+                }
+                else
+                {
+                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.Nom, A.Nom as Artiste, S.FaceA as TitreA, S.FaceB as TitreB FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId WHERE S.FaceA like '%" + query + "%' OR S.FaceB like '%" + query + "%'");
+                }
+
+            }
+            return singles;
+        }
+
+        public static List<SinglesJoinData> GetAllSinglesByTitreAndArtiste(String query, int artisteId)
+        {
+            List<SinglesJoinData> singles;
+            using (var db = new SQLiteConnection(SQLiteDataService.DbPath))
+            {
+                if (query.Equals(""))
+                {
+                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.Nom, A.Nom as Artiste, S.FaceA as TitreA, S.FaceB as TitreB FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId WHERE A.Id = '" + artisteId + "'");
+                }
+                else
+                {
+                    singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.Nom, A.Nom as Artiste, S.FaceA as TitreA, S.FaceB as TitreB FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId WHERE (S.FaceA like '%" + query + "%' OR S.FaceB like '%" + query + "%') AND A.Id = '" + artisteId + "'");
+                }
+            }
+            return singles;
+        }
+        
+        /* public static List<SinglesJoinData> GetAllSinglesByTitre(String query)
+        {
+            List<SinglesJoinData> singles;
+            using (var db = new SQLiteConnection(SQLiteDataService.DbPath))
+            {
+                if (query.Equals(""))
+                {
                     singles = db.Query<SinglesJoinData>("SELECT DISTINCT S.Id, S.Nom, A.Nom as Artiste FROM Singles S INNER JOIN Artiste A ON A.Id = S.ArtisteId INNER JOIN SinglesTitres ST ON S.Id = ST.SingleId INNER JOIN Titre T ON T.Id = ST.FaceId");
                 }
                 else
@@ -78,6 +113,6 @@ namespace VinylManager.Services
                 }
             }
             return singles;
-        }
+        } */
     }
 }

@@ -46,7 +46,7 @@ namespace VinylManager.ViewModel
 
         public ObservableCollection<SingleJoinDataViewModel> Search_Singles_Titres_Executed(String query)
         {
-            List<SinglesJoinData> models = SinglesJoinService.GetAllSinglesTitresByTitre(query);
+            List<SinglesJoinData> models = SinglesJoinService.GetAllSinglesByTitre(query);
 
             singles.Clear();
             foreach (var m in models)
@@ -59,7 +59,7 @@ namespace VinylManager.ViewModel
 
         public ObservableCollection<SingleJoinDataViewModel> Search_Singles_Titres_ByUser_Executed(String query, int artisteId)
         {
-            List<SinglesJoinData> models = SinglesJoinService.GetAllSinglesTitresByTitreAndArtiste(query, artisteId);
+            List<SinglesJoinData> models = SinglesJoinService.GetAllSinglesByTitreAndArtiste(query, artisteId);
 
             singles.Clear();
             foreach (var m in models)

@@ -25,6 +25,12 @@ namespace VinylManager.Models
         [Unique(Name = "IDX_SINGLES")]
         public int FaceBId { get; set; }
 
+        [MaxLength(100), NotNull]
+        public string FaceA { get; set; }
+
+        [MaxLength(100), NotNull]
+        public string FaceB { get; set; }
+
         [ManyToOne(CascadeOperations = CascadeOperation.CascadeRead)]
         public Artiste Artiste { get; set; }
 

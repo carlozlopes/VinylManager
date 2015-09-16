@@ -14,7 +14,9 @@ namespace VinylManager.JoinModels
 
         public String Artiste { get; set; }
 
-        public String Titre { get; set; }
+        public String TitreA { get; set; }
+
+        public String TitreB { get; set; }
 
         public String Annee { get; set; }
     }

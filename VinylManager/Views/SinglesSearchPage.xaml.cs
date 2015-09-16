@@ -84,14 +84,14 @@ namespace VinylManager.Views
 
             if (null != tempSingle)
             {
-                selectedSingle = singlesViewModel.Select_Childs_Selected_Single(tempSingle.Id);
+                /* selectedSingle = singlesViewModel.Select_Childs_Selected_Single(tempSingle.Id);
 
                 SingleBorder.DataContext = selectedSingle;
                 FaceA.Text = selectedSingle.FaceA.Nom;
                 AnneeFaceA.Text = selectedSingle.FaceA.Annee;
                 FaceB.Text = selectedSingle.FaceB.Nom;
                 AnneeFaceB.Text = selectedSingle.FaceB.Annee;
-                Artiste.Text = selectedSingle.Artiste.Nom;
+                Artiste.Text = selectedSingle.Artiste.Nom; */
             }
         }
     }

@@ -113,9 +113,11 @@ namespace VinylManager.Database
             Singles single = new Singles();
             single.Nom = nom;
             single.FaceAId = singleFaces[0].Id;
+            single.FaceA = singleFaces[0].Nom;
             if (null != singleFaces[1])
             {
-                single.FaceBId = singleFaces[1].Id;   
+                single.FaceBId = singleFaces[1].Id;
+                single.FaceB = singleFaces[1].Nom;
             }
             try
             {
