@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,10 +32,24 @@ namespace VinylManager.Views
         SinglesViewModel singlesViewModel = new SinglesViewModel();
         SingleViewModel selectedSingle = new SingleViewModel();
         SingleJoinDataViewModel tempSingle = new SingleJoinDataViewModel();
+        BitmapImage biUpGrayArrow;
+        BitmapImage biDownGrayArrow;
+        BitmapImage biUpOrangeArrow;
+        BitmapImage biDownOrangeArrow;
+        Image currentSelectedArrow = null;
 
         public SinglesSearchPage()
         {
             this.InitializeComponent();
+            /* biUpGrayArrow = new BitmapImage(new Uri(@"/Images/up-circular-gray.png", UriKind.Relative));
+            biDownGrayArrow = new BitmapImage(new Uri(@"/Images/down-circular-gray.png", UriKind.Relative));
+            biUpOrangeArrow = new BitmapImage(new Uri(@"/Images/up-circular-orange.png", UriKind.Relative));
+            biDownOrangeArrow = new BitmapImage(new Uri(@"/Images/down-circular-orange.png", UriKind.Relative)); */
+
+            biUpGrayArrow = new BitmapImage(new Uri("ms-appx:///Images/up-circular-gray.png", UriKind.Absolute));
+            biDownGrayArrow = new BitmapImage(new Uri("ms-appx:///Images/down-circular-gray.png", UriKind.Absolute));
+            biUpOrangeArrow = new BitmapImage(new Uri("ms-appx:///Images/up-circular-orange.png", UriKind.Absolute));
+            biDownOrangeArrow = new BitmapImage(new Uri("ms-appx:///Images/down-circular-orange.png", UriKind.Absolute));
         }
 
         private void SelectArtisteButton_Click(object sender, RoutedEventArgs e)
@@ -93,6 +108,51 @@ namespace VinylManager.Views
                 AnneeFaceB.Text = selectedSingle.FaceB.Annee;
                 Artiste.Text = selectedSingle.Artiste.Nom; */
             }
+        }
+
+        private void Image_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            swapSelectedArrows(sender as Image);
+        }
+
+        private void swapSelectedArrows(Image img)
+        {
+            if (null == currentSelectedArrow)
+            {
+                if (img.Name.Contains("up"))
+                {
+                    img.Source = biUpOrangeArrow;
+                }
+                else
+                {
+                    img.Source = biDownOrangeArrow;
+                }
+            }
+            else if (currentSelectedArrow.Name.Contains("up"))
+            {
+                currentSelectedArrow.Source = biUpGrayArrow;
+                if (img.Name.Contains("up"))
+                {
+                    img.Source = biUpOrangeArrow;
+                }
+                else
+                {
+                    img.Source = biDownOrangeArrow;
+                }
+            } 
+            else if (currentSelectedArrow.Name.Contains("down"))
+            {
+                currentSelectedArrow.Source = biDownGrayArrow;
+                if (img.Name.Contains("up"))
+                {
+                    img.Source = biUpOrangeArrow;
+                }
+                else
+                {
+                    img.Source = biDownOrangeArrow;
+                }
+            }
+            currentSelectedArrow = img;
         }
     }
 }

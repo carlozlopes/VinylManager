@@ -56,37 +56,77 @@
                       Width="1130">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
-                            <Grid Height="50" Background="BlueViolet">
+                            <Grid Height="50" Background="DarkViolet">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="150"/>
-                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="25"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="/Images/up-circular-gray.png" Grid.Row="0" Tapped="Image_Tapped" Height="20" Name="up_gray_arrow_artiste" />
+                                    <Image Source="/Images/down-circular-gray.png" Grid.Row="1" Tapped="Image_Tapped" Height="20" Name="down_gray_arrow_artiste" />
+                                </Grid>
                                 <TextBlock 
 				                    Text="Artiste"
 				                    TextWrapping="Wrap"
-				                    Grid.Column="0"
+				                    Grid.Column="1"
 				                    FontSize="18"
-				                    HorizontalAlignment="Center"/>
+				                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="25"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="/Images/up-circular-gray.png" Grid.Row="0" Tapped="Image_Tapped" Height="20" Name="up_arrow_nom"  />
+                                    <Image Source="/Images/down-circular-gray.png" Grid.Row="1" Tapped="Image_Tapped" Height="20" Name="down_arrow_nom"  />
+                                </Grid>
                                 <TextBlock
 				                    Text="Nom"
 				                    TextWrapping="Wrap"
-				                    Grid.Column="1"
+				                    Grid.Column="3"
 				                    FontSize="18"
-				                    HorizontalAlignment="Center"/>
+				                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                                <Grid Grid.Column="4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="25"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="/Images/up-circular-gray.png" Grid.Row="0" Tapped="Image_Tapped" Height="20" Name="up_arrow_titreA"  />
+                                    <Image Source="/Images/down-circular-gray.png" Grid.Row="1" Tapped="Image_Tapped" Height="20" Name="down_arrow_titreA"  />
+                                </Grid>
                                 <TextBlock
 				                    Text="Titre A"
 				                    TextWrapping="Wrap"
-				                    Grid.Column="2"
+				                    Grid.Column="5"
 				                    FontSize="18"
-				                    HorizontalAlignment="Center"/>
+				                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                                <Grid Grid.Column="6">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="25"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="/Images/up-circular-gray.png" Grid.Row="0" Tapped="Image_Tapped" Height="20" Name="up_arrow_titreB"  />
+                                    <Image Source="/Images/down-circular-gray.png" Grid.Row="1" Tapped="Image_Tapped" Height="20" Name="down_arrow_titreB"  />
+                                </Grid>
                                 <TextBlock
 				                    Text="Titre B"
 				                    TextWrapping="Wrap"
-				                    Grid.Column="3"
+				                    Grid.Column="7"
 				                    FontSize="18"
-				                    HorizontalAlignment="Center"/>
+				                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.HeaderTemplate>

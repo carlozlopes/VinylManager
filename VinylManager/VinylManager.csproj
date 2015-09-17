@@ -228,6 +228,10 @@
     <Content Include="CSV\export_complete.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\down-circular-gray.png" />
+    <Content Include="Images\down-circular-orange.png" />
+    <Content Include="Images\up-circular-gray.png" />
+    <Content Include="Images\up-circular-orange.png" />
     <None Include="packages.config" />
     <None Include="VinylManager_TemporaryKey.pfx" />
   </ItemGroup>
