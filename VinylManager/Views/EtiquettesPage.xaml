@@ -7,9 +7,139 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Grid Height="680" Background="SlateGray" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">   
+            <SearchBox QuerySubmitted="Artiste_Search_Box_QuerySubmitted"
+                Name="Artiste_Search_Box"
+                Width="330"
+                Height="40"
+                Margin="3"
+                PlaceholderText="Chercher un artiste" />
+            <SearchBox QuerySubmitted="Titre_Search_Box_QuerySubmitted"
+               Name="Titre_Search_Box"
+               Width="330"
+               Height="40"
+               Margin="3"
+               PlaceholderText="Chercher un titre" />
+            <ListView
+                SelectionMode="Multiple"
+                ItemsSource="{Binding}"
+                x:Name="SinglesListView"
+                SelectionChanged="SinglesListView_SelectionChanged"
+                Background="DarkBlue"
+                HorizontalAlignment="Left"
+                Width="330">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="200" Margin="6">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="60" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Artiste}" TextWrapping="NoWrap" Grid.Row="0"/>
+                            <TextBlock Text="{Binding TitreA}" TextWrapping="NoWrap" Grid.Row="1"/>
+                            <TextBlock Text="{Binding TitreB}" TextWrapping="NoWrap" Grid.Row="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <ListView SelectionMode="Single"
+                ItemsSource="{Binding}"
+                IsItemClickEnabled="false"
+                Grid.Column="1"
+                x:Name="SinglesEtiquettesListView"
+                SelectionChanged="SinglesEtiquettesListView_SelectionChanged"
+                Background="RoyalBlue"
+                HorizontalAlignment="Left"
+                Width="1020">
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Height="50" Background="BlueViolet">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock 
+				            Text="Artiste"
+				            TextWrapping="Wrap"
+				            Grid.Column="0"
+				            FontSize="18"
+				            HorizontalAlignment="Center"/>
+                        <TextBlock
+				            Text="Titre A"
+				            TextWrapping="Wrap"
+				            Grid.Column="1"
+				            FontSize="18"
+				            HorizontalAlignment="Center"/>
+                        <TextBlock
+				            Text="Titre B"
+				            TextWrapping="Wrap"
+				            Grid.Column="2"
+				            FontSize="18"
+				            HorizontalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="60" Margin="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Artiste}" TextWrapping="NoWrap" Grid.Column="0"/>
+                        <TextBlock Text="{Binding TitreA}" TextWrapping="NoWrap" Grid.Column="1"/>
+                        <TextBlock Text="{Binding TitreB}" TextWrapping="NoWrap" Grid.Column="2"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Popup x:Name="SelectArtistePopUp"
+                   Closed="SelectArtistePopUp_Closed"
+                   IsOpen="False"
+                   IsLightDismissEnabled="True">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" BorderThickness="2"
+                        Background="{StaticResource ApplicationPageBackgroundThemeBrush}" x:Name="SelectArtistePopUpBorder">
+                <StackPanel Orientation="Vertical" Background="DarkBlue" Height="400" x:Name="popArtiste">
+                    <StackPanel>
+                        <SearchBox QuerySubmitted="ArtisteSearchBox_QuerySubmitted"
+                                       SearchHistoryEnabled="False"
+                                       x:Name="ArtisteSearchBox"
+                                       Margin="10"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <ListView SelectionMode="Single"
+                                     Height="400"
+                                     ItemsSource="{Binding}"
+                                     SelectionChanged="ArtistesListView_SelectionChanged"
+                                     IsItemClickEnabled="False"
+                                     x:Name="ArtistesListView"
+                                     Margin="10">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10,0,0,0">
+                                        <TextBlock Text="{Binding Nom}" TextWrapping="NoWrap"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </StackPanel>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock HorizontalAlignment="Left" Margin="66,70,0,0" TextWrapping="Wrap" Text="Etiquettes" VerticalAlignment="Top" FontSize="36"/>
-
+            </Border>
+        </Popup>
     </Grid>
 </nav:NavigationPage>
