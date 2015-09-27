@@ -7,24 +7,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Height="680" Background="SlateGray" >
+    
+<Grid Height="680" Background="SlateGray" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">   
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="70" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <SearchBox QuerySubmitted="Artiste_Search_Box_QuerySubmitted"
                 Name="Artiste_Search_Box"
                 Width="330"
-                Height="40"
+                Height="35"
                 Margin="3"
-                PlaceholderText="Chercher un artiste" />
+                SearchHistoryEnabled="False"
+                PlaceholderText="Chercher un artiste"
+                Grid.Row="0"/>
             <SearchBox QuerySubmitted="Titre_Search_Box_QuerySubmitted"
                Name="Titre_Search_Box"
                Width="330"
-               Height="40"
+               Height="35"
                Margin="3"
-               PlaceholderText="Chercher un titre" />
+               SearchHistoryEnabled="False"
+               PlaceholderText="Chercher un titre"
+               Grid.Row="1"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <AppBarButton Icon="Add" Click="AppBarButton_Click"/>
+            </StackPanel>
             <ListView
                 SelectionMode="Multiple"
                 ItemsSource="{Binding}"
@@ -32,14 +46,15 @@
                 SelectionChanged="SinglesListView_SelectionChanged"
                 Background="DarkBlue"
                 HorizontalAlignment="Left"
-                Width="330">
+                Width="330"
+                Grid.Row="3">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Height="200" Margin="6">
+                        <Grid Height="110" Margin="6">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
-                                <RowDefinition Height="60" />
+                                <RowDefinition Height="50" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
                             <TextBlock Text="{Binding Artiste}" TextWrapping="NoWrap" Grid.Row="0"/>
                             <TextBlock Text="{Binding TitreA}" TextWrapping="NoWrap" Grid.Row="1"/>
@@ -48,7 +63,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackPanel>
+        </Grid>
         <ListView SelectionMode="Single"
                 ItemsSource="{Binding}"
                 IsItemClickEnabled="false"
@@ -57,7 +72,8 @@
                 SelectionChanged="SinglesEtiquettesListView_SelectionChanged"
                 Background="RoyalBlue"
                 HorizontalAlignment="Left"
-                Width="1020">
+                Width="1020"
+                Height="800">
             <ListView.HeaderTemplate>
                 <DataTemplate>
                     <Grid Height="50" Background="BlueViolet">
@@ -71,19 +87,19 @@
 				            TextWrapping="Wrap"
 				            Grid.Column="0"
 				            FontSize="18"
-				            HorizontalAlignment="Center"/>
+				            HorizontalAlignment="Left"/>
                         <TextBlock
 				            Text="Titre A"
 				            TextWrapping="Wrap"
 				            Grid.Column="1"
 				            FontSize="18"
-				            HorizontalAlignment="Center"/>
+				            HorizontalAlignment="Left"/>
                         <TextBlock
 				            Text="Titre B"
 				            TextWrapping="Wrap"
 				            Grid.Column="2"
 				            FontSize="18"
-				            HorizontalAlignment="Center"/>
+				            HorizontalAlignment="Left"/>
                     </Grid>
                 </DataTemplate>
             </ListView.HeaderTemplate>
