@@ -10,32 +10,31 @@
     <StackPanel Margin="5">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="80" />
+                <RowDefinition Height="70" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="330" />
                     <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="170" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="330" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80" />
                 </Grid.RowDefinitions>
-                <TextBox Width="300"
-                         Height="30"
-                         x:Name="ArtisteInput"
-                         HorizontalAlignment="Left" Margin="15,4,0,4" Grid.Column="0" />
-                <Button  Click="SelectArtisteButton_Click"
-                    	 Content="Select Artiste" Width="165" Grid.Column="2" />
-                <SearchBox QuerySubmitted="SearchBox_QuerySubmitted"
+                <SearchBox QuerySubmitted="Artiste_Search_Box_QuerySubmitted"
                            SearchHistoryEnabled="False"
-                           x:Name="SearchBox"
-                           Width="500"
-                           Height="30"
-                           Margin="10,10,-210,10"
+                           x:Name="Artiste_Search_Box"
+                           Width="300"
+                           Height="35"
+                           PlaceholderText="Chercher un artiste"
+                           Grid.Column="0" />
+                <SearchBox QuerySubmitted="Titre_Search_Box_QuerySubmitted"
+                           SearchHistoryEnabled="False"
+                           x:Name="Titre_Search_Box"
+                           Width="300"
+                           Height="35"
+                           PlaceholderText="Chercher un titre"
                            Grid.Column="4" Grid.ColumnSpan="2"/>
             </Grid>
             <Grid Height="680" Background="SlateGray" Grid.Row="1" >

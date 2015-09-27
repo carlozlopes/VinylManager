@@ -37,12 +37,12 @@ namespace VinylManager.Views
             this.InitializeComponent();
         }
 
-        private void SelectArtisteButton_Click(object sender, RoutedEventArgs e)
+        private void Artiste_Search_Box_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             if (!SelectArtistePopUp.IsOpen)
             {
-                ArtisteSearchBox.QueryText = ArtisteInput.Text;
-                ArtistesListView.DataContext = singlesSearchPageViewModel.Search_Artistes_Executed(ArtisteInput.Text);
+                ArtisteSearchBox.QueryText = args.QueryText;
+                ArtistesListView.DataContext = singlesSearchPageViewModel.Search_Artistes_Executed(args.QueryText);
 
                 SelectArtistePopUpBorder.Width = 650;
                 SelectArtistePopUp.HorizontalOffset = Window.Current.Bounds.Width - 1000;
@@ -51,12 +51,20 @@ namespace VinylManager.Views
             }
         }
 
-        private void SelectArtistePopUp_Closed(object sender, object e)
+        private void ArtistesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ArtisteInput.Text = selectedArtiste.Nom;
+            selectedArtiste = (ArtisteViewModel)ArtistesListView.SelectedItem;
         }
 
-        private void SearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
+        private void SelectArtistePopUp_Closed(object sender, object e)
+        {
+            if (null != selectedArtiste)
+            {
+                Artiste_Search_Box.QueryText = selectedArtiste.Nom;
+            }
+        }
+
+        private void Titre_Search_Box_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             if (null != selectedArtiste)
             {
@@ -66,11 +74,6 @@ namespace VinylManager.Views
             {
                 SinglesListView.DataContext = singlesViewModel.Search_Singles_Titres_Executed(args.QueryText);
             }
-        }
-
-        private void ArtistesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            selectedArtiste = (ArtisteViewModel)ArtistesListView.SelectedItem;
         }
 
         private void ArtisteSearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
