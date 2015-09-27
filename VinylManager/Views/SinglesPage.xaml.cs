@@ -49,13 +49,14 @@ namespace VinylManager.Views
 
         }
 
-        private void SearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
+        private void Titre_Search_Box_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             if (null != selectedArtiste)
             {
                 SinglesListView.DataContext = singlesViewModel.Search_Singles_ByUser_Executed(args.QueryText, selectedArtiste.Id);
             }
-            else {
+            else
+            {
                 SinglesListView.DataContext = singlesViewModel.Search_Singles_Executed(args.QueryText);
             }
         }
@@ -148,6 +149,9 @@ namespace VinylManager.Views
                     single.FaceBId = selectedSingle.FaceBId;
                 }
 
+                single.FaceA = FaceA.Text;
+                single.FaceB = FaceB.Text;
+
                 Titre faceA = new Titre();
                 faceA.Nom = FaceA.Text;
                 faceA.Annee = AnneeFaceA.Text;
@@ -236,14 +240,14 @@ namespace VinylManager.Views
             selectSingleArtisteClicked = false;
         }
 
-        private void SelectArtisteButton_Click(object sender, RoutedEventArgs e)
+        private void Artiste_Search_Box_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
         {
             ArtistesListView.DataContext = null;
             selectSingleArtisteClicked = false;
             if (!SelectArtistePopUp.IsOpen)
             {
-                ArtisteSearchBox.QueryText = ArtisteInput.Text;
-                ArtistesListView.DataContext = adminPageViewModel.Search_Artistes_Executed(ArtisteInput.Text);
+                ArtisteSearchBox.QueryText = args.QueryText;
+                ArtistesListView.DataContext = adminPageViewModel.Search_Artistes_Executed(args.QueryText);
 
                 SelectArtistePopUpBorder.Width = 650;
                 SelectArtistePopUp.HorizontalOffset = Window.Current.Bounds.Width - 1000;
@@ -284,7 +288,7 @@ namespace VinylManager.Views
             {
                 if (null != selectedArtiste)
                 {
-                    ArtisteInput.Text = selectedArtiste.Nom;
+                    Artiste_Search_Box.QueryText = selectedArtiste.Nom;
                 }
             }
         }
@@ -295,7 +299,8 @@ namespace VinylManager.Views
             if (!SelectArtistePopUp.IsOpen)
             {
                 ArtisteSearchBox.QueryText = SelectArtisteInput.Text;
-                ArtistesListView.DataContext = adminPageViewModel.Search_Artistes_Executed(ArtisteInput.Text);
+                ArtistesListView.DataContext = 
+                    adminPageViewModel.Search_Artistes_Executed(Artiste_Search_Box.QueryText);
 
                 SelectArtistePopUpBorder.Width = 650;
                 SelectArtistePopUp.HorizontalOffset = Window.Current.Bounds.Width - 1000;
@@ -303,12 +308,6 @@ namespace VinylManager.Views
                 SelectArtistePopUp.IsOpen = true;
             }
 
-        }
-
-        private void resetArtiste_Click(object sender, RoutedEventArgs e)
-        {
-            selectedArtiste = null;
-            ArtisteInput.Text = "";
         }
 
         private void AddGenreToSingleButton_Click(object sender, RoutedEventArgs e)
