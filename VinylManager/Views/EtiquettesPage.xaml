@@ -11,7 +11,8 @@
 <Grid Height="680" Background="SlateGray" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="800" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -64,60 +65,62 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <ListView SelectionMode="Single"
+        <Grid Grid.Column="1">
+            <ListView SelectionMode="Multiple"
                 ItemsSource="{Binding}"
-                IsItemClickEnabled="false"
-                Grid.Column="1"
                 x:Name="SinglesEtiquettesListView"
                 SelectionChanged="SinglesEtiquettesListView_SelectionChanged"
                 Background="RoyalBlue"
                 HorizontalAlignment="Left"
-                Width="1020"
-                Height="800">
-            <ListView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid Height="50" Background="BlueViolet">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock 
+                Width="800">
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid Height="50" Background="BlueViolet">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="280"/>
+                                <ColumnDefinition Width="280"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock 
 				            Text="Artiste"
 				            TextWrapping="Wrap"
 				            Grid.Column="0"
 				            FontSize="18"
 				            HorizontalAlignment="Left"/>
-                        <TextBlock
+                            <TextBlock
 				            Text="Titre A"
 				            TextWrapping="Wrap"
 				            Grid.Column="1"
 				            FontSize="18"
 				            HorizontalAlignment="Left"/>
-                        <TextBlock
+                            <TextBlock
 				            Text="Titre B"
 				            TextWrapping="Wrap"
 				            Grid.Column="2"
 				            FontSize="18"
 				            HorizontalAlignment="Left"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Height="60" Margin="6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Artiste}" TextWrapping="NoWrap" Grid.Column="0"/>
-                        <TextBlock Text="{Binding TitreA}" TextWrapping="NoWrap" Grid.Column="1"/>
-                        <TextBlock Text="{Binding TitreB}" TextWrapping="NoWrap" Grid.Column="2"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="60" Margin="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="280"/>
+                                <ColumnDefinition Width="280"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Artiste}" TextWrapping="NoWrap" Grid.Column="0"/>
+                            <TextBlock Text="{Binding TitreA}" TextWrapping="NoWrap" Grid.Column="1"/>
+                            <TextBlock Text="{Binding TitreB}" TextWrapping="NoWrap" Grid.Column="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Background="SlateGray" Grid.Column="2">
+            
+        </Grid>
         <Popup x:Name="SelectArtistePopUp"
                    Closed="SelectArtistePopUp_Closed"
                    IsOpen="False"
@@ -157,5 +160,11 @@
 
             </Border>
         </Popup>
+        <Button Content="Delete" Grid.Column="2"
+                Name="Delete_Selected_Singles"
+                Click="Delete_Selected_Singles_Click"
+                HorizontalAlignment="Center"
+                Margin="75,628,-75,0"
+                VerticalAlignment="Top"/>
     </Grid>
 </nav:NavigationPage>

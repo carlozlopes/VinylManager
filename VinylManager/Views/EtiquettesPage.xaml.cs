@@ -107,13 +107,23 @@ namespace VinylManager.Views
                     {
                         SinglesToEtiquettes.Add(item);
                     }
-                    // ShoppingCart.Text += item.Title + ", ";
                 }
-                // ShoppingCart.Text = ShoppingCart.Text.TrimEnd(charsToTrim);
-                // ShoppingCart.Text += " added to cart";
             }
             SinglesEtiquettesListView.DataContext = null;
             SinglesEtiquettesListView.DataContext = SinglesToEtiquettes;
+        }
+
+        private void Delete_Selected_Singles_Click(object sender, RoutedEventArgs e)
+        {
+            if (SinglesEtiquettesListView.SelectedItems.Count != 0)
+            {
+                foreach (SingleJoinDataViewModel item in SinglesEtiquettesListView.SelectedItems)
+                {
+                    SinglesToEtiquettes.Remove(item);
+                }
+                SinglesEtiquettesListView.DataContext = null;
+                SinglesEtiquettesListView.DataContext = SinglesToEtiquettes;
+            }
         }
     }
 }
