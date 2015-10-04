@@ -166,5 +166,12 @@
                 HorizontalAlignment="Center"
                 Margin="75,628,-75,0"
                 VerticalAlignment="Top"/>
+        <Button Content="Générer Etiquettes"
+                Name="Generer_Etiquettes"
+                Click="Generer_Etiquettes_Click"
+                Grid.Column="2"
+                HorizontalAlignment="Left"
+                Margin="30,91,0,0"
+                VerticalAlignment="Top"/>
     </Grid>
 </nav:NavigationPage>
