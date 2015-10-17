@@ -282,20 +282,17 @@ namespace VinylManager.Views
             {
                 // Open the document to enable you to write to the document
                 document.Open();
-                PdfPTable table = new PdfPTable(3);
+                PdfPTable table = new PdfPTable(2);
+                // table.DefaultCell.FixedHeight = Utilities.MillimetersToInches(25.4F);
+                table.TotalWidth = Utilities.MillimetersToPoints(160);
                 int counter = 0;
                 foreach (SingleJoinDataViewModel item in SinglesEtiquettesListView.Items)
                 {
                     table.AddCell(createEtiquette(item));
                     counter = counter + 1;
                 }
-                int missingCells = counter % 3;
+                int missingCells = counter % 2;
                 if (missingCells == 1)
-                {
-                    table.AddCell(createEmptyEtiquette());
-                    table.AddCell(createEmptyEtiquette());
-                }
-                else if (missingCells == 2)
                 {
                     table.AddCell(createEmptyEtiquette());
                 }
@@ -312,6 +309,7 @@ namespace VinylManager.Views
         private PdfPTable createEtiquette(SingleJoinDataViewModel item)
         {
             PdfPTable internalTable = new PdfPTable(1);
+            PdfPCell initialSpace = new PdfPCell();
             PdfPCell titreACell = new PdfPCell(new Phrase(item.TitreA, titreFont));
             titreACell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             titreACell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
@@ -322,9 +320,11 @@ namespace VinylManager.Views
             artisteCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             artisteCell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
 
-            titreACell.FixedHeight = 20;
-            artisteCell.FixedHeight = 40;
-            titreBCell.FixedHeight = 20;
+            initialSpace.FixedHeight = Utilities.MillimetersToInches(3.5f);
+            titreACell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
+            artisteCell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
+            titreBCell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
+            internalTable.AddCell(initialSpace);
             internalTable.AddCell(titreACell);
             internalTable.AddCell(artisteCell);
             internalTable.AddCell(titreBCell);
@@ -335,12 +335,16 @@ namespace VinylManager.Views
         private PdfPTable createEmptyEtiquette()
         {
             PdfPTable internalTable = new PdfPTable(1);
+            internalTable.TotalWidth = Utilities.MillimetersToPoints(160);
+            PdfPCell initialSpace = new PdfPCell();
             PdfPCell titreACell = new PdfPCell();
             PdfPCell titreBCell = new PdfPCell();
             PdfPCell artisteCell = new PdfPCell();
-            titreACell.FixedHeight = 20;
-            artisteCell.FixedHeight = 40;
-            titreBCell.FixedHeight = 20;
+            initialSpace.FixedHeight = Utilities.MillimetersToInches(3.5f);
+            titreACell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
+            artisteCell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
+            titreBCell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
+            internalTable.AddCell(initialSpace);
             internalTable.AddCell(titreACell);
             internalTable.AddCell(artisteCell);
             internalTable.AddCell(titreBCell);
