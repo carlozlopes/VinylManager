@@ -167,18 +167,27 @@
 
             </Border>
         </Popup>
-        <Button Content="Delete" Grid.Column="2"
+        <Button Content="Effacer singles selectionnés" Grid.Column="2"
                 Name="Delete_Selected_Singles"
                 Click="Delete_Selected_Singles_Click"
                 HorizontalAlignment="Center"
-                Margin="75,628,-75,0"
+                IsEnabled="False"
+                Margin="1,591,21,0"
                 VerticalAlignment="Top"/>
         <Button Content="Générer Etiquettes"
                 Name="Generer_Etiquettes"
                 Click="Generer_Etiquettes_Click"
                 Grid.Column="2"
+                IsEnabled="False"
                 HorizontalAlignment="Left"
-                Margin="50,574,-20,0"
+                Margin="56,543,0,0"
                 VerticalAlignment="Top"/>
+        <Button Content="Effacer tous les singles" Grid.Column="2"
+        	x:Name="Delete_All_Singles"
+        	Click="Delete_All_Singles_Click"
+        	HorizontalAlignment="Center"
+            IsEnabled="False"
+        	Margin="30,638,23,0"
+        	VerticalAlignment="Top"/>
     </Grid>
 </nav:NavigationPage>

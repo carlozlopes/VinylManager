@@ -190,7 +190,7 @@ namespace VinylManager.Views
 
         private void SinglesEtiquettesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            Delete_Selected_Singles.IsEnabled = true;
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -214,9 +214,22 @@ namespace VinylManager.Views
                         SinglesToEtiquettes.Add(item);
                     }
                 }
+                activateGenerateAndDeleteAll();
             }
             SinglesEtiquettesListView.DataContext = null;
             SinglesEtiquettesListView.DataContext = SinglesToEtiquettes;
+        }
+
+        private void activateGenerateAndDeleteAll()
+        {
+            Generer_Etiquettes.IsEnabled = true;
+            Delete_All_Singles.IsEnabled = true;
+        }
+
+        private void desactivateGenerateAndDeleteAll()
+        {
+            Generer_Etiquettes.IsEnabled = false;
+            Delete_All_Singles.IsEnabled = false;
         }
 
         private void Delete_Selected_Singles_Click(object sender, RoutedEventArgs e)
@@ -229,7 +242,20 @@ namespace VinylManager.Views
                 }
                 SinglesEtiquettesListView.DataContext = null;
                 SinglesEtiquettesListView.DataContext = SinglesToEtiquettes;
+                if (SinglesToEtiquettes.Count < 1)
+                {
+                    desactivateGenerateAndDeleteAll();
+                }
             }
+            Delete_Selected_Singles.IsEnabled = false;
+        }
+
+        private void Delete_All_Singles_Click(object sender, RoutedEventArgs e)
+        {
+            SinglesToEtiquettes = new List<SingleJoinDataViewModel>();
+            SinglesEtiquettesListView.DataContext = null;
+            SinglesEtiquettesListView.DataContext = SinglesToEtiquettes;
+            desactivateGenerateAndDeleteAll();
         }
 
         private void Generer_Etiquettes_Click(object sender, RoutedEventArgs e)
@@ -255,7 +281,7 @@ namespace VinylManager.Views
                 file = await storageFolder.CreateFileAsync(path, CreationCollisionOption.OpenIfExists);
                 StorageFile sampleFileToDelete = await storageFolder.GetFileAsync(path);
                 await sampleFileToDelete.DeleteAsync();
-                file = await storageFolder.CreateFileAsync(path, CreationCollisionOption.OpenIfExists);
+                file = await storageFolder.CreateFileAsync(path, CreationCollisionOption.FailIfExists);
             }
 
             // Open to PDF file for read/write.
@@ -283,8 +309,8 @@ namespace VinylManager.Views
                 // Open the document to enable you to write to the document
                 document.Open();
                 PdfPTable table = new PdfPTable(2);
-                // table.DefaultCell.FixedHeight = Utilities.MillimetersToInches(25.4F);
                 table.TotalWidth = Utilities.MillimetersToPoints(160);
+                // table.DefaultCell.Border = Rectangle.NO_BORDER;
                 int counter = 0;
                 foreach (SingleJoinDataViewModel item in SinglesEtiquettesListView.Items)
                 {
@@ -309,25 +335,14 @@ namespace VinylManager.Views
         private PdfPTable createEtiquette(SingleJoinDataViewModel item)
         {
             PdfPTable internalTable = new PdfPTable(1);
-            PdfPCell initialSpace = new PdfPCell();
-            PdfPCell titreACell = new PdfPCell(new Phrase(item.TitreA, titreFont));
-            titreACell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-            titreACell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
-            PdfPCell titreBCell = new PdfPCell(new Phrase(item.TitreB, titreFont));
-            titreBCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-            titreBCell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
-            PdfPCell artisteCell = new PdfPCell(new Phrase(item.Artiste, artisteFont));
-            artisteCell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-            artisteCell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+            // internalTable.DefaultCell.Border = Rectangle.NO_BORDER;
+            internalTable.TotalWidth = Utilities.MillimetersToPoints(160f);
 
-            initialSpace.FixedHeight = Utilities.MillimetersToInches(3.5f);
-            titreACell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
-            artisteCell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
-            titreBCell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
-            internalTable.AddCell(initialSpace);
-            internalTable.AddCell(titreACell);
-            internalTable.AddCell(artisteCell);
-            internalTable.AddCell(titreBCell);
+            internalTable.AddCell(createEmptyCellWithFixedHeight(3.5f));
+            internalTable.AddCell(createCellWithTextAndFixedHeight(6.5f, item.TitreA, true));
+            internalTable.AddCell(createCellWithTextAndFixedHeight(6.5f, item.Artiste, false));
+            internalTable.AddCell(createCellWithTextAndFixedHeight(6.5f, item.TitreB, true));
+            internalTable.AddCell(createEmptyCellWithFixedHeight(2.4f));
 
             return internalTable;
         }
@@ -335,21 +350,43 @@ namespace VinylManager.Views
         private PdfPTable createEmptyEtiquette()
         {
             PdfPTable internalTable = new PdfPTable(1);
-            internalTable.TotalWidth = Utilities.MillimetersToPoints(160);
-            PdfPCell initialSpace = new PdfPCell();
-            PdfPCell titreACell = new PdfPCell();
-            PdfPCell titreBCell = new PdfPCell();
-            PdfPCell artisteCell = new PdfPCell();
-            initialSpace.FixedHeight = Utilities.MillimetersToInches(3.5f);
-            titreACell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
-            artisteCell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
-            titreBCell.FixedHeight = Utilities.MillimetersToPoints(6.5f);
-            internalTable.AddCell(initialSpace);
-            internalTable.AddCell(titreACell);
-            internalTable.AddCell(artisteCell);
-            internalTable.AddCell(titreBCell);
+            // internalTable.DefaultCell.Border = Rectangle.NO_BORDER;
+            internalTable.TotalWidth = Utilities.MillimetersToPoints(160f);
+
+            internalTable.AddCell(createEmptyCellWithFixedHeight(3.5f));
+            internalTable.AddCell(createEmptyCellWithFixedHeight(6.5f));
+            internalTable.AddCell(createEmptyCellWithFixedHeight(6.5f));
+            internalTable.AddCell(createEmptyCellWithFixedHeight(6.5f));
+            internalTable.AddCell(createEmptyCellWithFixedHeight(2.4f));
 
             return internalTable;
+        }
+
+        private PdfPCell createCellWithTextAndFixedHeight(float height, String text, Boolean titre)
+        {
+            Phrase phrase;
+            if (titre)
+            {
+                phrase = new Phrase(text, titreFont);
+            }
+            else
+            {
+                phrase = new Phrase(text, artisteFont);
+            }
+            PdfPCell cell = new PdfPCell(phrase);
+            cell.Border = Rectangle.NO_BORDER;
+            cell.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            cell.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+            cell.FixedHeight = Utilities.MillimetersToPoints(height);
+            return cell;
+        }
+
+        private PdfPCell createEmptyCellWithFixedHeight(float height)
+        {
+            PdfPCell cell = new PdfPCell();
+            cell.Border = Rectangle.NO_BORDER;
+            cell.FixedHeight = Utilities.MillimetersToPoints(height);
+            return cell;
         }
 
         private void setFonts()
