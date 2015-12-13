@@ -14,7 +14,6 @@ namespace VinylManager.ViewModel
     internal class AdminPageViewModel : ViewModelBase
     {
         private DelegateCommand searchArtistesCommand;
-        private DelegateCommand newCommand;
         private ObservableCollection<ArtisteViewModel> artistes = new ObservableCollection<ArtisteViewModel>();
         // private ArtisteViewModel selectedArtiste = null;
         private bool hasSelection = false;

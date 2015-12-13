@@ -17,7 +17,6 @@ namespace VinylManager.ViewModel
         private ObservableCollection<ArtisteViewModel> artistes = new ObservableCollection<ArtisteViewModel>();
         private DelegateCommand selectCommand;
         private ArtisteViewModel selectedArtiste = null;
-        private bool isDatabaseCreated = false;
 
         public MainPageViewModel()
         {
@@ -61,5 +60,7 @@ namespace VinylManager.ViewModel
 
             this.isDatabaseCreated = true;
         }
+
+        public bool isDatabaseCreated { get; set; }
     }
 }

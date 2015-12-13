@@ -209,14 +209,14 @@ namespace VinylManager.Database
                     faceB1.FaceId = quatreT.FaceB1Id;
                     faceB1.QuatreTitresId = quatreT.Id;
                     this.conn.Insert(faceB1);
-                    if (null != quatreT.FaceA2Id)
+                    if (0 < quatreT.FaceA2Id)
                     {
                         QuatreTitreTitres faceA2 = new QuatreTitreTitres();
                         faceA2.FaceId = quatreT.FaceA2Id;
                         faceA2.QuatreTitresId = quatreT.Id;
                         this.conn.Insert(faceA2);
                     }
-                    if (null != quatreT.FaceB2Id)
+                    if (0 < quatreT.FaceB2Id)
                     {
                         QuatreTitreTitres faceB2 = new QuatreTitreTitres();
                         faceB2.FaceId = quatreT.FaceB2Id;
