@@ -22,13 +22,10 @@ namespace VinylManager.Models
         [MaxLength(50)]
         public string Couleur { get; set; }
 
+        [MaxLength(50)]
+        public string EtatPochette { get; set; }
+
         [NotNull]
         public int TypeId { get; set; }
-
-        [ForeignKey(typeof(Pochette))]
-        public int PochetteId { get; set; }
-
-        [OneToOne]
-        public Pochette Pochette { get; set; }
     }
 }

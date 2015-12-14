@@ -28,7 +28,6 @@ namespace VinylManager.Database
             this.conn.DropTable<Artiste>();
             this.conn.DropTable<Titre>();
             this.conn.DropTable<Inventaire>();
-            this.conn.DropTable<Pochette>();
             this.conn.DropTable<QuatreTitres>();
             this.conn.DropTable<QuatreTitreTitres>();
             this.conn.DropTable<Singles>();
@@ -38,7 +37,6 @@ namespace VinylManager.Database
             this.conn.CreateTable<Artiste>();
             this.conn.CreateTable<Titre>();
             this.conn.CreateTable<Inventaire>();
-            this.conn.CreateTable<Pochette>();
             this.conn.CreateTable<QuatreTitres>();
             this.conn.CreateTable<QuatreTitreTitres>();
             this.conn.CreateTable<Singles>();
@@ -136,17 +134,13 @@ namespace VinylManager.Database
                         singleFaceB.SingleId = single.Id;
                         this.conn.Insert(singleFaceB);   
                     }
-                    Pochette pochette = new Pochette();
-                    pochette.Etat = "Excellent";
-                    this.conn.Insert(pochette);
                     Inventaire inventaire = new Inventaire();
                     inventaire.DisqueId = single.Id;
                     inventaire.Etat = "Excellent";
                     inventaire.Couleur = "Noir";
+                    inventaire.EtatPochette = "Excellente";
                     inventaire.TypeId = 1;
                     this.conn.Insert(inventaire);
-                    inventaire.PochetteId = pochette.Id;
-                    this.conn.Update(inventaire);
                     single.ArtisteId = artiste.Id;
                     this.conn.Update(single);
                     artiste.singleCounter = singleCounter;
@@ -223,17 +217,13 @@ namespace VinylManager.Database
                         faceB2.QuatreTitresId = quatreT.Id;
                         this.conn.Insert(faceB2);
                     }
-                    Pochette pochette = new Pochette();
-                    pochette.Etat = "Excellent";
-                    this.conn.Insert(pochette);
                     Inventaire inventaire = new Inventaire();
                     inventaire.DisqueId = quatreT.Id;
                     inventaire.Etat = "Excellent";
                     inventaire.Couleur = "Noir";
+                    inventaire.EtatPochette = "Excellente";
                     inventaire.TypeId = 2;
                     this.conn.Insert(inventaire);
-                    inventaire.PochetteId = pochette.Id;
-                    this.conn.Update(inventaire);
                     quatreT.ArtisteId = artiste.Id;
                     this.conn.Update(quatreT);
                     artiste.quatreTitresCounter = quatreTCounter;
@@ -293,17 +283,13 @@ namespace VinylManager.Database
                 {
                     // database calls inside the transaction
                     this.conn.Insert(trente3t);
-                    Pochette pochette = new Pochette();
-                    pochette.Etat = "Excellent";
-                    this.conn.Insert(pochette);
                     Inventaire inventaire = new Inventaire();
                     inventaire.DisqueId = trente3t.Id;
                     inventaire.Etat = "Excellent";
                     inventaire.Couleur = "Noir";
+                    inventaire.EtatPochette = "Excellente"; 
                     inventaire.TypeId = 1;
                     this.conn.Insert(inventaire);
-                    inventaire.PochetteId = pochette.Id;
-                    this.conn.Update(inventaire);
                     trente3t.ArtisteId = artiste.Id;
                     this.conn.Update(trente3t);
 

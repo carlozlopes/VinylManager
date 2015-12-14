@@ -151,17 +151,13 @@ namespace VinylManager.Services
                             singleFaceB.SingleId = single.Id;
                             db.Insert(singleFaceB);
                         }
-                        Pochette pochette = new Pochette();
-                        pochette.Etat = "Excellent";
-                        db.Insert(pochette);
                         Inventaire inventaire = new Inventaire();
                         inventaire.DisqueId = single.Id;
                         inventaire.Etat = "Excellent";
                         inventaire.Couleur = "Noir";
+                        inventaire.EtatPochette = "Excellente";
                         inventaire.TypeId = 1;
                         db.Insert(inventaire);
-                        inventaire.PochetteId = pochette.Id;
-                        db.Update(inventaire);
                         single.ArtisteId = artiste.Id;
                         db.Update(single);
                         artiste.singleCounter = singleCounter;

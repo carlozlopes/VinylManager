@@ -35,7 +35,6 @@ namespace VinylManager.Services
                 connection.CreateTable<Artiste>();
                 connection.CreateTable<Titre>();
                 connection.CreateTable<Inventaire>();
-                connection.CreateTable<Pochette>();
                 connection.CreateTable<QuatreTitres>();
                 connection.CreateTable<Singles>();
                 connection.CreateTable<TrenteTroisTours>();

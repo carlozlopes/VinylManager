@@ -133,7 +133,6 @@
     <Compile Include="Models\Artiste.cs" />
     <Compile Include="Models\Titre.cs" />
     <Compile Include="Models\Inventaire.cs" />
-    <Compile Include="Models\Pochette.cs" />
     <Compile Include="Models\QuatreTitreTitres.cs" />
     <Compile Include="Models\QuatreTitres.cs" />
     <Compile Include="Models\Singles.cs" />
@@ -153,7 +152,6 @@
     <Compile Include="Services\ComplexeQueriesService.cs" />
     <Compile Include="Services\TitreService.cs" />
     <Compile Include="Services\InventaireService.cs" />
-    <Compile Include="Services\PochetteService.cs" />
     <Compile Include="Services\QuatreTitresService.cs" />
     <Compile Include="Services\SinglesJoinService.cs" />
     <Compile Include="Services\SinglesService.cs" />
@@ -178,6 +176,8 @@
     <Compile Include="SQLiteNetExtensions\Extensions\WriteOperations.cs" />
     <Compile Include="Utils\VynilMessages.cs" />
     <Compile Include="ViewModel\AdminPageViewModel.cs" />
+    <Compile Include="ViewModel\InventaireSinglesViewModel.cs" />
+    <Compile Include="ViewModel\InventaireSingleViewModel.cs" />
     <Compile Include="ViewModel\SingleJoinDataViewModel.cs" />
     <Compile Include="ViewModel\SinglesSearchPageViewModel.cs" />
     <Compile Include="ViewModel\SinglesViewModel.cs" />
