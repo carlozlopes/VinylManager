@@ -35,12 +35,12 @@ namespace VinylManager.Views
         SingleViewModel selectedSingle = new SingleViewModel();
         SingleJoinDataViewModel tempSingle = new SingleJoinDataViewModel();
         TitresViewModel titresViewModel = new TitresViewModel();
+        InventaireSingleViewModel selectedInventaire = new InventaireSingleViewModel();
+        InventaireSinglesViewModel inventaireSinglesViewModel =
+            new InventaireSinglesViewModel();
 
-        private bool selectFaceAClicked = false;
+
         private bool selectSingleArtisteClicked = false;
-
-        private Titre faceA;
-        private Titre faceB;
 
         public SinglesPage()
         {
@@ -68,6 +68,8 @@ namespace VinylManager.Views
             {
                 DeleteSingle.IsEnabled = true;
                 selectedSingle = singlesViewModel.Select_Childs_Selected_Single(tempSingle.Id);
+                inventaireListView.DataContext =
+                    inventaireSinglesViewModel.Select_Inventary_From_SingleId(tempSingle.Id);
 
                 SingleBorder.DataContext = selectedSingle;
                 SelectArtisteInput.Text = selectedSingle.Artiste.Nom;
@@ -81,6 +83,7 @@ namespace VinylManager.Views
 
                 EditSingle.IsEnabled = true;
                 DeleteSingle.IsEnabled = true;
+                NewVinyl.IsEnabled = true;
                 desactivateFieldsAndButtons();
             }
             else
@@ -112,15 +115,38 @@ namespace VinylManager.Views
             activateCommonFieldsAndButtons();
         }
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            confirmDelete();
+            MessageDialog message = new MessageDialog("Etes-vous sûr de vouloir effacer le single sélectionné?");
+
+            message.Commands.Add(new UICommand(
+                "OK",
+                new UICommandInvokedHandler(this.AcceptDeleteSingleEventHandler)));
+
+            message.Commands.Add(new UICommand(
+                "NO",
+                new UICommandInvokedHandler(this.CancelDeleteSingleEventHandler)));
+
+            // Set the command that will be invoked by default
+            message.DefaultCommandIndex = 0;
+
+            // Set the command to be invoked when escape is pressed
+            message.CancelCommandIndex = 1;
+
+            await message.ShowAsync();
         }
 
-        private async void confirmDelete()
+        private void AcceptDeleteSingleEventHandler(IUICommand command)
         {
-            MessageDialog message = new MessageDialog("Sure?");
-            await message.ShowAsync();
+            Singles single = SinglesService.GetSingleById(Convert.ToInt32(selectedSingle.Id));
+            InventaireService.DeleteAllInventairesOfSingle(Convert.ToInt32(single.Id));
+            SinglesListView.DataContext = singlesViewModel.deleteSingle(single);
+            cleanFields();
+        }
+
+        private void CancelDeleteSingleEventHandler(IUICommand command)
+        {
+
         }
 
         private void deleteSingle()
@@ -238,6 +264,21 @@ namespace VinylManager.Views
             SelectArtisteInput.Text = "";
             selectedSingleArtiste = null;
             selectSingleArtisteClicked = false;
+            selectedInventaire = null;
+            inventaireListView.DataContext = null;
+        }
+
+        private void activateEditAndDeleteVynil()
+        {
+            EditVinyl.IsEnabled = true;
+            DeleteVinyl.IsEnabled = true;
+        }
+
+        private void deactivateVynilButtons()
+        {
+            NewVinyl.IsEnabled = false;
+            EditVinyl.IsEnabled = false;
+            DeleteVinyl.IsEnabled = false;
         }
 
         private void Artiste_Search_Box_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
@@ -310,9 +351,92 @@ namespace VinylManager.Views
 
         }
 
-        private void AddGenreToSingleButton_Click(object sender, RoutedEventArgs e)
+        private void inventaireListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            activateEditAndDeleteVynil();
+            selectedInventaire = (InventaireSingleViewModel)inventaireListView.SelectedItem;
+        }
+
+        private void NewVinyl_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CreateEditInventairePopUp.IsOpen)
+            {
+                CreateEditInventairePopUpBorder.Width = 400;
+                CreateEditInventairePopUp.HorizontalOffset = Window.Current.Bounds.Width - 1000;
+                CreateEditInventairePopUp.VerticalOffset = Window.Current.Bounds.Height - 530;
+                CreateEditInventairePopUp.IsOpen = true;
+            }
+        }
+
+        private void EditVinyl_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CreateEditInventairePopUp.IsOpen)
+            {
+                CreateEditInventairePopUpBorder.Width = 400;
+                CreateEditInventairePopUp.HorizontalOffset = Window.Current.Bounds.Width - 1000;
+                CreateEditInventairePopUp.VerticalOffset = Window.Current.Bounds.Height - 530;
+                EtatVynilCB.SelectedIndex = EtatVynilCB.Items.IndexOf(selectedInventaire.Etat);
+                EtatVynilCB.SelectedValue = selectedInventaire.Etat;
+                CouleurVynilCB.SelectedValue = selectedInventaire.Couleur;
+                EtatPochetteCB.SelectedValue = selectedInventaire.EtatPochette;
+                CreateEditInventairePopUp.IsOpen = true;
+            }
+        }
+
+        private async void DeleteVinyl_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog message = new MessageDialog("Etes-vous sûr de vouloir effacer le vynil sélectionné");
+
+            message.Commands.Add(new UICommand(
+                "OK",
+                new UICommandInvokedHandler(this.AcceptDeleteEventHandler)));
+
+            message.Commands.Add(new UICommand(
+                "NO",
+                new UICommandInvokedHandler(this.CancelDeleteEventHandler)));
+
+            // Set the command that will be invoked by default
+            message.DefaultCommandIndex = 0;
+
+            // Set the command to be invoked when escape is pressed
+            message.CancelCommandIndex = 1;
+
+            await message.ShowAsync();
+        }
+
+        private void AcceptDeleteEventHandler(IUICommand command)
+        {
+            Inventaire vynil = InventaireService.GetInventaireById(Convert.ToInt32(selectedInventaire.Id));
+            inventaireListView.DataContext = inventaireSinglesViewModel.deleteVynil(vynil);
+        }
+
+        private void CancelDeleteEventHandler(IUICommand command)
+        {
+            
+        }
+
+        private void CreateEditInventairePopUp_Closed(object sender, object e)
+        {
+            CreateEditInventairePopUp.IsOpen = false;
 
         }
+
+        private void SaveInventary_Click(object sender, RoutedEventArgs e)
+        {
+            Inventaire vynil = new Inventaire();
+            vynil.DisqueId = selectedSingle.Id;
+            vynil.Etat = EtatVynilCB.SelectedValue.ToString();
+            vynil.Couleur = CouleurVynilCB.SelectedValue.ToString();
+            vynil.EtatPochette = EtatPochetteCB.SelectedValue.ToString();
+
+            inventaireListView.DataContext = inventaireSinglesViewModel.saveVynil(vynil);
+        }
+
+        private void CancelInventary_Click(object sender, RoutedEventArgs e)
+        {
+            CreateEditInventairePopUp.IsOpen = false;
+        }
+
+        
     }
 }

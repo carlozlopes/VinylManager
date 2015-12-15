@@ -105,9 +105,9 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="40" />
                         <RowDefinition Height="10" />
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="80" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Text="Id"
                                Grid.Column="0"
@@ -120,32 +120,18 @@
                                FontSize="20" Margin="0,1,23,9" Grid.RowSpan="2" Grid.ColumnSpan="2" />
                     <TextBlock Grid.Column="0"
                                Grid.Row="2"
-                               Text="Nom"
-                               FontSize="20"
-                               HorizontalAlignment="Left"
-                               FontWeight="Light" Margin="0,10,0,0" Width="40" />
-                    <TextBox   Grid.Column="1"
-                               Grid.Row="2"
-                               HorizontalAlignment="Left"
-                               Width="250"
-                               x:Name="Nom"
-                               IsReadOnly="True"
-                               Text="{Binding Nom, Mode=TwoWay}"
-                               FontSize="20" />
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="4"
                                Text="Face A"
                                FontSize="20"
                                HorizontalAlignment="Left"
                                FontWeight="Light" Margin="0,10,0,0" Width="100" />
                     <TextBlock Grid.Column="1"
-                               Grid.Row="4"
+                               Grid.Row="2"
                                Text="Nom"
                                FontSize="20"
                                HorizontalAlignment="Left"
                                FontWeight="Light" Margin="0,10,0,0" Width="100" />
                     <TextBox Grid.Column="1"
-                             Grid.Row="4"
+                             Grid.Row="2"
                              HorizontalAlignment="Left"
                              Width="250"
                              x:Name="FaceA"
@@ -153,6 +139,40 @@
                              FontSize="20"
                              Margin="60,1,0,1" />
                     <TextBlock Grid.Column="1"
+                               Grid.Row="2"
+                               Text="Année"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="320,10,0,0" Width="100" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="2"
+                             HorizontalAlignment="Left"
+                             Width="70"
+                             x:Name="AnneeFaceA"
+                             IsReadOnly="False"
+                             FontSize="20"
+                             Margin="390,1,0,1" />
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="4"
+                               Text="Face B"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
+                    <TextBlock Grid.Column="1"
+                               Grid.Row="4"
+                               Text="Nom"
+                               FontSize="20"
+                               HorizontalAlignment="Left"
+                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
+                    <TextBox Grid.Column="1"
+                             Grid.Row="4"
+                             HorizontalAlignment="Left"
+                             Width="250"
+                             x:Name="FaceB"
+                             IsReadOnly="False"
+                             FontSize="20"
+                             Margin="60,1,0,1" />
+                    <TextBlock Grid.Column="1"
                                Grid.Row="4"
                                Text="Année"
                                FontSize="20"
@@ -162,65 +182,104 @@
                              Grid.Row="4"
                              HorizontalAlignment="Left"
                              Width="70"
-                             x:Name="AnneeFaceA"
-                             IsReadOnly="False"
-                             FontSize="20"
-                             Margin="390,1,0,1" />
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="6"
-                               Text="Face B"
-                               FontSize="20"
-                               HorizontalAlignment="Left"
-                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
-                    <TextBlock Grid.Column="1"
-                               Grid.Row="6"
-                               Text="Nom"
-                               FontSize="20"
-                               HorizontalAlignment="Left"
-                               FontWeight="Light" Margin="0,10,0,0" Width="100" />
-                    <TextBox Grid.Column="1"
-                             Grid.Row="6"
-                             HorizontalAlignment="Left"
-                             Width="250"
-                             x:Name="FaceB"
-                             IsReadOnly="False"
-                             FontSize="20"
-                             Margin="60,1,0,1" />
-                    <TextBlock Grid.Column="1"
-                               Grid.Row="6"
-                               Text="Année"
-                               FontSize="20"
-                               HorizontalAlignment="Left"
-                               FontWeight="Light" Margin="320,10,0,0" Width="100" />
-                    <TextBox Grid.Column="1"
-                             Grid.Row="6"
-                             HorizontalAlignment="Left"
-                             Width="70"
                              x:Name="AnneeFaceB"
                              IsReadOnly="False"
                              FontSize="20"
                              Margin="390,1,0,1" />
                     <TextBlock Grid.Column="0"
-                               Grid.Row="8"
+                               Grid.Row="6"
                                Text="Artiste"
                                FontSize="20"
                                HorizontalAlignment="Left"
                                FontWeight="Light" Margin="0,10,0,0" Width="100" />
                     <TextBox Grid.Column="1"
-                             Grid.Row="8"
+                             Grid.Row="6"
                              Width="250"
                              IsReadOnly="False"
                              x:Name="SelectArtisteInput"
                              HorizontalAlignment="Left" />
                     <Button  Grid.Column="1"
-                             Grid.Row="8"
+                             Grid.Row="6"
                              IsEnabled="true"
                              x:Name="AddArtistToSingleButton"
                              Click="AddArtistToSingleButton_Click"
                              Content="Select Artiste" Margin="260,2,0,0" />
-                    <StackPanel Grid.Row="12" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
                         <AppBarButton Icon="Accept" x:Name="SaveSingle" IsEnabled="True" Click="AcceptButton_Click" />
                         <AppBarButton Icon="Cancel" x:Name="ClearSingleInfo" IsEnabled="True" Click="CancelButton_Click_1" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="11" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left">
+                        <AppBarToggleButton Icon="Add"
+                                    Label="New"
+                                    IsEnabled="False"
+                                    x:Name="NewVinyl"
+                                    Click="NewVinyl_Click" />
+                        <AppBarToggleButton Icon="Edit"
+                                    Label="Edit"
+                                    x:Name="EditVinyl"
+                                    Click="EditVinyl_Click"
+                                    IsEnabled="False" />
+                        <AppBarButton Icon="Delete"
+                              Label="Delete"
+                              x:Name="DeleteVinyl"
+                              Click="DeleteVinyl_Click"
+                              IsEnabled="False" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="11" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Background="RoyalBlue">
+                        <StackPanel>
+                            <ListView SelectionMode="Single"
+                              Width="600"
+                              ItemsSource="{Binding}"
+                              SelectionChanged="inventaireListView_SelectionChanged"
+                              Grid.Column="1"
+                              x:Name="inventaireListView"
+                              IsItemClickEnabled="False"
+                              Background="RoyalBlue">
+                                <ListView.HeaderTemplate>
+                                    <DataTemplate>
+                                        <Grid Height="50" Background="BlueViolet">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="150"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock 
+				                                Text="Etat"
+				                                TextWrapping="Wrap"
+				                                Grid.Column="0"
+				                                FontSize="18"
+				                                HorizontalAlignment="Left"/>
+                                            <TextBlock
+				                                Text="Couleur"
+				                                TextWrapping="Wrap"
+				                                Grid.Column="1"
+				                                FontSize="18"
+				                                HorizontalAlignment="Left"/>
+                                            <TextBlock
+				                                Text="Etat Pochette"
+				                                TextWrapping="Wrap"
+				                                Grid.Column="2"
+				                                FontSize="18"
+				                                HorizontalAlignment="Left"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.HeaderTemplate>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Height="50" Margin="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="150"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Etat}" TextWrapping="NoWrap" Grid.Column="0"/>
+                                            <TextBlock Text="{Binding Couleur}" TextWrapping="NoWrap" Grid.Column="1"/>
+                                            <TextBlock Text="{Binding EtatPochette}" TextWrapping="NoWrap" Grid.Column="2"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -263,6 +322,86 @@
 
                 </Border>
             </Popup>
+            <Popup x:Name="CreateEditInventairePopUp"
+                   Closed="CreateEditInventairePopUp_Closed"
+                   IsOpen="False"
+                   IsLightDismissEnabled="True">
+                <Popup.ChildTransitions>
+                    <TransitionCollection>
+                        <PaneThemeTransition />
+                    </TransitionCollection>
+                </Popup.ChildTransitions>
+                <Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" BorderThickness="2"
+                        Background="{StaticResource ApplicationPageBackgroundThemeBrush}" x:Name="CreateEditInventairePopUpBorder">
+                    
+                    <Grid DataContext="{Binding}" Background="DarkBlue" Height="250">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Etat"
+                                   Grid.Column="0"
+                                   Grid.Row="1"
+                                   FontSize="20"
+                                   HorizontalAlignment="center"
+                                   FontWeight="Light" />
+                        <TextBlock Text="Couleur"
+                                   Grid.Column="0"
+                                   Grid.Row="3"
+                                   FontSize="20"
+                                   HorizontalAlignment="center"
+                                   FontWeight="Light" />
+                        <TextBlock Text="Etat Pochette"
+                                   Grid.Column="0"
+                                   Grid.Row="5"
+                                   FontSize="20"
+                                   HorizontalAlignment="center"
+                                   FontWeight="Light" />
+                        <ComboBox Grid.Column="1"
+                                  Grid.Row="1"
+                                  Width="230"
+                                  Name="EtatVynilCB"
+                                  SelectedValuePath="Content">
+                            <ComboBoxItem>Bon</ComboBoxItem>
+                            <ComboBoxItem>Très bon</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">Excellent</ComboBoxItem>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1"
+                                  Grid.Row="3"
+                                  Width="230"
+                                  Name="CouleurVynilCB"
+                                  SelectedValuePath="Content">
+                            <ComboBoxItem>Bleu</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">Noir</ComboBoxItem>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1"
+                                  Grid.Row="5"
+                                  Width="230"
+                                  Name="EtatPochetteCB"
+                                  SelectedValuePath="Content">
+                            <ComboBoxItem>Indisponible</ComboBoxItem>
+                            <ComboBoxItem>Bon</ComboBoxItem>
+                            <ComboBoxItem>Très bon</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">Excellent</ComboBoxItem>
+                        </ComboBox>
+                        <StackPanel Grid.Column="1" Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <AppBarButton Icon="Accept" Name="SaveInventary" Click="SaveInventary_Click" />
+                            <AppBarButton Icon="Cancel" Name="CancelInventary" Click="CancelInventary_Click" />
+                        </StackPanel>
+                    </Grid>    
+                </Border>
+            </Popup>
+                
         </Grid>
     </StackPanel>
 </Page>

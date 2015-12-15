@@ -25,6 +25,19 @@ namespace VinylManager.Services
             return inventaires;
         }
 
+        public static List<Inventaire> GetAllInventaireBySingleId(int singleId)
+        {
+            List<Inventaire> inventaires;
+            using (var db = new SQLiteConnection(SQLiteDataService.DbPath))
+            {
+                inventaires = (from a in db.Table<Inventaire>()
+                               where a.DisqueId == singleId && a.TypeId == 1
+                               select a).ToList();
+            }
+            return inventaires;
+
+        }
+
         public static Inventaire GetInventaireById(int Id)
         {
             using (var db = new SQLiteConnection(SQLiteDataService.DbPath))
@@ -66,6 +79,20 @@ namespace VinylManager.Services
 
                 // SQL Syntax:
                 db.Execute("DELETE FROM Inventaire WHERE Id = ?", inventaire.Id);
+            }
+        }
+
+        public static void DeleteAllInventairesOfSingle(int singleId)
+        {
+            using (var db = new SQLiteConnection(SQLiteDataService.DbPath))
+            {
+                db.Trace = true;
+
+                // Object model:
+                // db.Delete(artiste);
+
+                // SQL Syntax:
+                db.Execute("DELETE FROM Inventaire WHERE DisqueId = ? and TypeId = ?", singleId, 1);
             }
         }
     }
