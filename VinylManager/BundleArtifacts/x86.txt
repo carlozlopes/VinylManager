@@ -1,0 +1,4 @@
+MainPackage=C:\Users\Carlos\documents\visual studio 2013\Projects\VinylManager\VinylManager\bin\x86\Debug\VinylManager_1.0.0.2_Bundle\VinylManager_1.0.0.2_x86_Debug.appx
+SymbolPackage=C:\Users\Carlos\documents\visual studio 2013\Projects\VinylManager\VinylManager\AppPackages\VinylManager_1.0.0.2_Debug_Test\VinylManager_1.0.0.2_x86_Debug.appxsym
+ResourcePack=C:\Users\Carlos\documents\visual studio 2013\Projects\VinylManager\VinylManager\bin\x86\Debug\VinylManager_1.0.0.2_Bundle\VinylManager_1.0.0.2_scale-140.appx
+ResourcePack=C:\Users\Carlos\documents\visual studio 2013\Projects\VinylManager\VinylManager\bin\x86\Debug\VinylManager_1.0.0.2_Bundle\VinylManager_1.0.0.2_scale-180.appx
