@@ -14,7 +14,6 @@ namespace VinylManager.ViewModel
     class SinglesSearchPageViewModel : ViewModelBase
     {
         private DelegateCommand searchArtistesCommand;
-        private DelegateCommand newCommand;
         private ObservableCollection<ArtisteViewModel> artistes = new ObservableCollection<ArtisteViewModel>();
 
         public SinglesSearchPageViewModel()

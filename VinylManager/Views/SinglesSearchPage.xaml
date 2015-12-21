@@ -51,41 +51,41 @@
                       Background="RoyalBlue"
                       Margin="15,15,10,10"
                       Grid.ColumnSpan="2"
-                      HorizontalAlignment="Left"
                       Width="1130">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
                             <Grid Height="50" Background="BlueViolet">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="150"/>
-                                    <ColumnDefinition Width="150"/>
                                     <ColumnDefinition Width="250"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="350"/>
+                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock 
 				                    Text="Artiste"
 				                    TextWrapping="Wrap"
 				                    Grid.Column="0"
 				                    FontSize="18"
-				                    HorizontalAlignment="Center"/>
+                                    Padding="10 0 0 0"
+				                    HorizontalAlignment="Left"/>
                                 <TextBlock
 				                    Text="Nom"
 				                    TextWrapping="Wrap"
 				                    Grid.Column="1"
 				                    FontSize="18"
-				                    HorizontalAlignment="Center"/>
+				                    HorizontalAlignment="Left"/>
                                 <TextBlock
 				                    Text="Titre A"
 				                    TextWrapping="Wrap"
 				                    Grid.Column="2"
 				                    FontSize="18"
-				                    HorizontalAlignment="Center"/>
+				                    HorizontalAlignment="Left"/>
                                 <TextBlock
 				                    Text="Titre B"
 				                    TextWrapping="Wrap"
 				                    Grid.Column="3"
 				                    FontSize="18"
-				                    HorizontalAlignment="Center"/>
+				                    HorizontalAlignment="Left"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
@@ -93,15 +93,15 @@
                         <DataTemplate>
                             <Grid Height="60" Margin="6">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="150"/>
-                                    <ColumnDefinition Width="150"/>
                                     <ColumnDefinition Width="250"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="350"/>
+                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding Artiste}" TextWrapping="NoWrap" Grid.Column="0"/>
-                                <TextBlock Text="{Binding Nom}" TextWrapping="NoWrap" Grid.Column="1"/>
-                                <TextBlock Text="{Binding TitreA}" TextWrapping="NoWrap" Grid.Column="2"/>
-                                <TextBlock Text="{Binding TitreB}" TextWrapping="NoWrap" Grid.Column="3"/>
+                                <TextBlock Text="{Binding Artiste}" TextWrapping="NoWrap" Grid.Column="0" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding Nom}" TextWrapping="NoWrap" Grid.Column="1" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding TitreA}" TextWrapping="NoWrap" Grid.Column="2" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding TitreB}" TextWrapping="NoWrap" Grid.Column="3" HorizontalAlignment="Left"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -127,7 +127,7 @@
                         </StackPanel>
                         <StackPanel>
                             <ListView SelectionMode="Single"
-                                     Height="400"
+                                     Height="335"
                                      ItemsSource="{Binding}"
                                      SelectionChanged="ArtistesListView_SelectionChanged"
                                      IsItemClickEnabled="False"
