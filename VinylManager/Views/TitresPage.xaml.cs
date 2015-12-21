@@ -34,6 +34,7 @@ namespace VinylManager.Views
         public TitresPage()
         {
             this.InitializeComponent();
+            desactivateEditControlsAndResetTopBar();
         }
 
         private void SearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
@@ -73,14 +74,14 @@ namespace VinylManager.Views
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             topButtonBarClicked();
-            MessageDialog message = new MessageDialog("Do you want to delete the selected titre?");
+            MessageDialog message = new MessageDialog("Etes-vous sûr de vouloir effacer le titre sélectionné?");
 
             message.Commands.Add(new UICommand(
-                "OK",
+                "OUI",
                 new UICommandInvokedHandler(this.AcceptDeleteEventHandler)));
 
             message.Commands.Add(new UICommand(
-                "NO",
+                "NON",
                 new UICommandInvokedHandler(this.CancelDeleteEventHandler)));
 
             // Set the command that will be invoked by default
@@ -111,6 +112,7 @@ namespace VinylManager.Views
 
             TitresListView.DataContext = titresViewModel.saveTitre(titre);
             topButtonBarClicked();
+            desactivateEditControlsAndResetTopBar();
         }
 
         private void CancelButton_Click_1(object sender, RoutedEventArgs e)
@@ -160,7 +162,8 @@ namespace VinylManager.Views
 
         private void activateEditControls()
         {
-            Nom.IsEnabled = true;
+            Nom.IsReadOnly = false;
+            Annee.IsReadOnly = false;
         }
 
         private void desactivateEditControlsAndResetTopBar()
@@ -174,8 +177,10 @@ namespace VinylManager.Views
             EditTitre.IsEnabled = false;
             EditTitre.IsChecked = false;
             DeleteTitre.IsEnabled = false;
-            Nom.IsEnabled = false;
+            Nom.IsReadOnly = true;
             Nom.Text = "";
+            Annee.IsReadOnly = true;
+            Annee.Text = "";
         }
     }
 }
