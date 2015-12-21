@@ -139,8 +139,14 @@ namespace VinylManager.ViewModel
                 {
                     return new Titre();
                 }
-
-                return this.model.Faces[1];
+                if (this.model.Faces.Count > 1)
+                {
+                    return this.model.Faces[1];
+                }
+                else
+                {
+                    return this.model.Faces[0];
+                }
             }
 
             set

@@ -1,4 +1,5 @@
-﻿using VinylManager.MVVM;
+﻿using VinylManager.Utils;
+using VinylManager.MVVM;
 using VinylManager.ViewModel;
 using VinylManager.Services;
 using VinylManager.Models;
@@ -120,11 +121,11 @@ namespace VinylManager.Views
             MessageDialog message = new MessageDialog("Etes-vous sûr de vouloir effacer le single sélectionné?");
 
             message.Commands.Add(new UICommand(
-                "OK",
+                "OUI",
                 new UICommandInvokedHandler(this.AcceptDeleteSingleEventHandler)));
 
             message.Commands.Add(new UICommand(
-                "NO",
+                "NON",
                 new UICommandInvokedHandler(this.CancelDeleteSingleEventHandler)));
 
             // Set the command that will be invoked by default
@@ -163,7 +164,8 @@ namespace VinylManager.Views
             {
                 if (true == NewSingle.IsChecked)
                 {
-                    single.Nom = Nom.Text;
+                    int nextSingleValue = selectedSingleArtiste.SingleCounter + 1;
+                    single.Nom = "single" + nextSingleValue;
                     single.ArtisteId = selectedSingleArtiste.Id;
                 }
                 else
@@ -256,7 +258,6 @@ namespace VinylManager.Views
 
         private void cleanFields()
         {
-            Nom.Text = "";
             FaceA.Text = "";
             AnneeFaceA.Text = "";
             FaceB.Text = "";
@@ -276,8 +277,8 @@ namespace VinylManager.Views
 
         private void deactivateVynilButtons()
         {
-            NewVinyl.IsEnabled = false;
             EditVinyl.IsEnabled = false;
+            EditVinyl.IsChecked = false;
             DeleteVinyl.IsEnabled = false;
         }
 
@@ -321,8 +322,6 @@ namespace VinylManager.Views
                 if (null != selectedSingleArtiste)
                 {
                     SelectArtisteInput.Text = selectedSingleArtiste.Nom;
-                    int nextSingleValue = selectedSingleArtiste.SingleCounter + 1;
-                    Nom.Text = "single" + nextSingleValue;
                 }
             }
             else
@@ -372,27 +371,30 @@ namespace VinylManager.Views
         {
             if (!CreateEditInventairePopUp.IsOpen)
             {
-                CreateEditInventairePopUpBorder.Width = 400;
-                CreateEditInventairePopUp.HorizontalOffset = Window.Current.Bounds.Width - 1000;
-                CreateEditInventairePopUp.VerticalOffset = Window.Current.Bounds.Height - 530;
-                EtatVynilCB.SelectedIndex = EtatVynilCB.Items.IndexOf(selectedInventaire.Etat);
-                EtatVynilCB.SelectedValue = selectedInventaire.Etat;
-                CouleurVynilCB.SelectedValue = selectedInventaire.Couleur;
-                EtatPochetteCB.SelectedValue = selectedInventaire.EtatPochette;
-                CreateEditInventairePopUp.IsOpen = true;
+                if (selectedInventaire != null)
+                {
+                    CreateEditInventairePopUpBorder.Width = 400;
+                    CreateEditInventairePopUp.HorizontalOffset = Window.Current.Bounds.Width - 1000;
+                    CreateEditInventairePopUp.VerticalOffset = Window.Current.Bounds.Height - 530;
+                    EtatVynilCB.SelectedIndex = EtatVynilCB.Items.IndexOf(selectedInventaire.Etat);
+                    EtatVynilCB.SelectedValue = selectedInventaire.Etat;
+                    CouleurVynilCB.SelectedValue = selectedInventaire.Couleur;
+                    EtatPochetteCB.SelectedValue = selectedInventaire.EtatPochette;
+                    CreateEditInventairePopUp.IsOpen = true;
+                }
             }
         }
 
         private async void DeleteVinyl_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog message = new MessageDialog("Etes-vous sûr de vouloir effacer le vynil sélectionné");
+            MessageDialog message = new MessageDialog("Etes-vous sûr de vouloir effacer le vinyl sélectionné");
 
             message.Commands.Add(new UICommand(
-                "OK",
+                "OUI",
                 new UICommandInvokedHandler(this.AcceptDeleteEventHandler)));
 
             message.Commands.Add(new UICommand(
-                "NO",
+                "NON",
                 new UICommandInvokedHandler(this.CancelDeleteEventHandler)));
 
             // Set the command that will be invoked by default
@@ -406,30 +408,41 @@ namespace VinylManager.Views
 
         private void AcceptDeleteEventHandler(IUICommand command)
         {
-            Inventaire vynil = InventaireService.GetInventaireById(Convert.ToInt32(selectedInventaire.Id));
-            inventaireListView.DataContext = inventaireSinglesViewModel.deleteVynil(vynil);
+            if (selectedInventaire != null)
+            {
+                Inventaire vynil = InventaireService.GetInventaireById(Convert.ToInt32(selectedInventaire.Id));
+                inventaireListView.DataContext = inventaireSinglesViewModel.deleteVynil(vynil);
+            }
         }
 
         private void CancelDeleteEventHandler(IUICommand command)
         {
-            
+            deactivateVynilButtons();
         }
 
         private void CreateEditInventairePopUp_Closed(object sender, object e)
         {
             CreateEditInventairePopUp.IsOpen = false;
-
+            deactivateVynilButtons();
         }
 
         private void SaveInventary_Click(object sender, RoutedEventArgs e)
         {
-            Inventaire vynil = new Inventaire();
-            vynil.DisqueId = selectedSingle.Id;
-            vynil.Etat = EtatVynilCB.SelectedValue.ToString();
-            vynil.Couleur = CouleurVynilCB.SelectedValue.ToString();
-            vynil.EtatPochette = EtatPochetteCB.SelectedValue.ToString();
+            Inventaire vinyl = new Inventaire();
+            if (selectedInventaire != null)
+            {
+                vinyl.Id = selectedInventaire.Id;
+            }
 
-            inventaireListView.DataContext = inventaireSinglesViewModel.saveVynil(vynil);
+            vinyl.DisqueId = selectedSingle.Id;
+            vinyl.Etat = EtatVynilCB.SelectedValue.ToString();
+            vinyl.Couleur = CouleurVynilCB.SelectedValue.ToString();
+            vinyl.EtatPochette = EtatPochetteCB.SelectedValue.ToString();
+            vinyl.TypeId = InventaryConstants.SINGLE_TYPE;
+            CreateEditInventairePopUp.IsOpen = false;
+
+            inventaireListView.DataContext = inventaireSinglesViewModel.saveVynil(vinyl);
+
         }
 
         private void CancelInventary_Click(object sender, RoutedEventArgs e)
