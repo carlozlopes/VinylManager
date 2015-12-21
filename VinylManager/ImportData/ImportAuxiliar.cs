@@ -31,15 +31,26 @@ namespace VinylManager.ImportData
         private static int INTERPRETE = 1;
         private static int AUTEUR = 0;
         private static int COMPOSITEUR = 0;
+
+        private static readonly String ARTISTE_INCONNUE = "Inconnue";
+
+        private static readonly String SINGLES_PREFIX = "Singles";
+
+        private static readonly String QUARENTE_CINQUE_PREFIX = "45 t";
+
+        private static readonly String QUATRE_PREFIX = "4 titres";
+
+        private static readonly String TRENTE_TROIS_PREFIX = "33 t";
+
+        private static readonly String FACEA = "A";
     
         public async void readCSVFile() {
 
             databaseAuxiliar = new DatabaseAuxiliar();
             databaseAuxiliar.initDatabase();
             // settings
-            var path = @"CSV\export_complete.csv";
+            var path = @"CSV\export_complete_test.csv";
             var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-
 
             // acquire file
             var file = await folder.GetFileAsync(path);
@@ -77,53 +88,76 @@ namespace VinylManager.ImportData
             {
                 insertPending();
             }
+            String artistNameDecoded = decodeArtisteName(values[1]);
             if (null == currentArtiste)
             {
                 currentArtiste = databaseAuxiliar.insertArtiste(
-                    values[1], "Inconnue", INTERPRETE, COMPOSITEUR, AUTEUR);
+                    artistNameDecoded, ARTISTE_INCONNUE, INTERPRETE, COMPOSITEUR, AUTEUR);
                 if (null == currentArtiste)
                 {
-                    currentArtiste = databaseAuxiliar.selectArtiste(values[1]);
+                    currentArtiste = databaseAuxiliar.selectArtiste(artistNameDecoded);
                 }
                 counterSingleByArtiste = 1;
                 counter4tByArtiste = 1;
                 counter33tByArtiste = 1;
             }
-            else if (!currentArtiste.Nom.Equals(values[1]))
+            else if (!currentArtiste.Nom.Equals(artistNameDecoded))
             {
                 currentArtiste = databaseAuxiliar.insertArtiste(
-                    values[1], "Inconnue", INTERPRETE, COMPOSITEUR, AUTEUR);
+                    artistNameDecoded, ARTISTE_INCONNUE, INTERPRETE, COMPOSITEUR, AUTEUR);
                 if (null == currentArtiste)
                 {
-                    currentArtiste = databaseAuxiliar.selectArtiste(values[1]);
+                    currentArtiste = databaseAuxiliar.selectArtiste(artistNameDecoded);
                 }
                 counterSingleByArtiste = 1;
                 counter4tByArtiste = 1;
                 counter33tByArtiste = 1;
             }
 
-            if (values[0].Equals("Singles") || values[0].Equals("45 t"))
+            if (values[0].Equals(SINGLES_PREFIX) || values[0].Equals(QUARENTE_CINQUE_PREFIX))
             {
                 currentType = values[0];
                 insertSingle(values);
             }
-            else if (values[0].Equals("4 titres"))
+            else if (values[0].Equals(QUATRE_PREFIX))
             {
                 currentType = values[0];
                 insert4t(values);
             }
-            else if (values[0].Equals("33 t"))
+            else if (values[0].Equals(TRENTE_TROIS_PREFIX))
             {
                 currentType = values[0];
                 insert33t(values);
             }
         }
 
+        private string decodeArtisteName(String name) {
+            String[] names = name.Split(' ');
+            if (names.Length > 1)
+            {
+                if (names[names.Length - 1].StartsWith("(") && names[names.Length - 1].EndsWith(")"))
+                {
+                    String formattedName = names[names.Length - 1].Substring(1, names[names.Length - 1].Length - 2);
+                    int i = 0;
+                    while (i < names.Length - 1) {
+                        formattedName += " " + names[i];
+                        i++;
+                    }
+                    return formattedName;
+                }
+                else
+                {
+                    return names[1] + " " + names[0];
+                }
+            }
+            return name;
+        }
+
         private void insertPending()
         {
             if (null != singleFaces[0])
             {
-                currentSingle = databaseAuxiliar.insertSingle("single" + counterSingleByArtiste,
+                currentSingle = databaseAuxiliar.insertSingle(SINGLES_PREFIX + counterSingleByArtiste,
                         currentArtiste, singleFaces, counterSingleByArtiste);
                 if (null == currentSingle)
                 {
@@ -138,7 +172,7 @@ namespace VinylManager.ImportData
             }
             else if (null != quatreTitresFaces[0] && null != quatreTitresFaces[2])
             {
-                current4t = databaseAuxiliar.insert4t("4t" + counter4tByArtiste,
+                current4t = databaseAuxiliar.insert4t(QUATRE_PREFIX + counter4tByArtiste,
                         currentArtiste, quatreTitresFaces, counter4tByArtiste);
                 if (null == current4t)
                 {
@@ -153,7 +187,7 @@ namespace VinylManager.ImportData
             }
             else if (0 < list33tA.Count && 0 < list33tB.Count)
             {
-                current33t = databaseAuxiliar.insert33t("33t" + counter33tByArtiste,
+                current33t = databaseAuxiliar.insert33t(TRENTE_TROIS_PREFIX + counter33tByArtiste,
                         currentArtiste, list33tA, list33tB, counter33tByArtiste);
                 counter33tByArtiste++;
                 list33tA = new List<Titre>();
@@ -170,7 +204,7 @@ namespace VinylManager.ImportData
         {
             if (null == singleFaces[0] )
             {
-                if (single[26].Equals("A"))
+                if (single[26].Equals(FACEA))
                 {
                     singleFaces[0] = databaseAuxiliar.insertTitre(single[28], single[31]);
                     if (null == singleFaces[0])
@@ -187,11 +221,11 @@ namespace VinylManager.ImportData
             }
             else
             {
-                if (pendingInsertion && single[26].Equals("A"))
+                if (pendingInsertion && single[26].Equals(FACEA))
                 {
                     // Insert single with face A only
                     currentSingle = databaseAuxiliar.insertSingle(
-                        "single" + counterSingleByArtiste, currentArtiste, singleFaces, counterSingleByArtiste);
+                        SINGLES_PREFIX + counterSingleByArtiste, currentArtiste, singleFaces, counterSingleByArtiste);
                     if (null == currentSingle)
                     {
                         selectSingle();
@@ -218,7 +252,7 @@ namespace VinylManager.ImportData
                     }
                     
                     // insert single with face A and B
-                    currentSingle = databaseAuxiliar.insertSingle("single" + counterSingleByArtiste,
+                    currentSingle = databaseAuxiliar.insertSingle(SINGLES_PREFIX + counterSingleByArtiste,
                         currentArtiste, singleFaces, counterSingleByArtiste);
                     if (null == currentSingle)
                     {
@@ -237,12 +271,12 @@ namespace VinylManager.ImportData
 
         private void insert4t(String[] quatreT)
         {
-            if (quatreT[26].Equals("A"))
+            if (quatreT[26].Equals(FACEA))
             {
                 if (pendingInsertion && null != quatreTitresFaces[0] && null != quatreTitresFaces[2])
                 {
                     // insert pending
-                    current4t = databaseAuxiliar.insert4t("4t" + counter4tByArtiste,
+                    current4t = databaseAuxiliar.insert4t(QUATRE_PREFIX + counter4tByArtiste,
                         currentArtiste, quatreTitresFaces, counter4tByArtiste);
                     if (null == current4t)
                     {
@@ -296,7 +330,7 @@ namespace VinylManager.ImportData
                         quatreTitresFaces[3] = databaseAuxiliar.selectTitre(quatreT[28], quatreT[31]);
                     }
 
-                    current4t = databaseAuxiliar.insert4t("4t" + counter4tByArtiste,
+                    current4t = databaseAuxiliar.insert4t(QUATRE_PREFIX + counter4tByArtiste,
                        currentArtiste, quatreTitresFaces, counter4tByArtiste);
                     if (null == current4t)
                     {
@@ -318,11 +352,11 @@ namespace VinylManager.ImportData
 
         private void insert33t(String[] trente3t)
         {
-            if (trente3t[26].Equals("A"))
+            if (trente3t[26].Equals(FACEA))
             {
                 if (pendingInsertion && 0 < list33tB.Count)
                 {
-                    current33t = databaseAuxiliar.insert33t("33t" + counter33tByArtiste,
+                    current33t = databaseAuxiliar.insert33t(TRENTE_TROIS_PREFIX + counter33tByArtiste,
                         currentArtiste, list33tA, list33tB, counter33tByArtiste);
                     counter33tByArtiste++;
                     list33tA = new List<Titre>();
@@ -334,10 +368,6 @@ namespace VinylManager.ImportData
                 Titre tmp = new Titre();
                 foreach (String face in trimmedFaces)
                 {
-                    if ("Giselle".Equals(face))
-                    {
-                        Debug.WriteLine(face);
-                    }
                     tmp = databaseAuxiliar.insertTitre(face, trente3t[31]);
                     if (null == tmp)
                     {
@@ -345,10 +375,6 @@ namespace VinylManager.ImportData
                     }
                     list33tA.Add(tmp);
                 }
-                /* if (0 < list33tA.Count)
-                {
-                    pendingInsertion = true;
-                } */
             }
             else
             {
@@ -356,10 +382,6 @@ namespace VinylManager.ImportData
                 Titre tmp = new Titre();
                 foreach (String face in trimmedFaces)
                 {
-                    if ("Giselle".Equals(face))
-                    {
-                        Debug.WriteLine(face);
-                    }
                     tmp = databaseAuxiliar.insertTitre(face, trente3t[31]);
                     if (null == tmp)
                     {

@@ -1,7 +1,8 @@
-﻿using SQLiteNetExtensions.Extensions;
-using SQLite;
+﻿using VinylManager.Utils;
 using VinylManager.Services;
 using VinylManager.Models;
+using SQLiteNetExtensions.Extensions;
+using SQLite;
 using System.Diagnostics;
 using System;
 using System.Collections.Generic;
@@ -44,16 +45,13 @@ namespace VinylManager.Managers
                             Artiste artiste = ArtisteService.GetArtisteById(single.ArtisteId);
                             artiste.singleCounter += 1;
                             db.InsertOrReplace(artiste);
-                            /* Pochette pochette = new Pochette();
-                            pochette.Etat = "Excellent";
-                            db.Insert(pochette);
-                            Inventaire inventaire = new Inventaire();
-                            inventaire.DisqueId = single.Id;
-                            inventaire.Etat = "Excellent";
-                            inventaire.Couleur = "Noir";
-                            inventaire.TypeId = 1;
-                            inventaire.PochetteId = pochette.Id;
-                            db.Insert(inventaire); */
+                            Inventaire vinyl = new Inventaire();
+                            vinyl.DisqueId = single.Id;
+                            vinyl.Etat = InventaryConstants.DEFAULT_VINYL_STATE;
+                            vinyl.Couleur = InventaryConstants.DEFAULT_VINYL_COLOR;
+                            vinyl.EtatPochette = InventaryConstants.DEFAULT_POCHETTE_STATE;
+                            vinyl.TypeId = InventaryConstants.SINGLE_TYPE;
+                            db.Insert(vinyl);
                         });
                     }
                     catch (Exception e)
@@ -87,16 +85,6 @@ namespace VinylManager.Managers
                                 db.Execute("UPDATE SinglesTitres SET FaceId = ? WHERE SingleId = ? AND FaceId = ?", faceBId, single.Id, oldFaceBId);
                                 // SinglesTitresService.updateSingleTitre(single.Id, faceBId, oldFaceBId);
                             }
-                            /* Pochette pochette = new Pochette();
-                            pochette.Etat = "Excellent";
-                            db.Insert(pochette);
-                            Inventaire inventaire = new Inventaire();
-                            inventaire.DisqueId = single.Id;
-                            inventaire.Etat = "Excellent";
-                            inventaire.Couleur = "Noir";
-                            inventaire.TypeId = 1;
-                            inventaire.PochetteId = pochette.Id;
-                            db.Insert(inventaire); */
                         });
                     }
                     catch (Exception e)

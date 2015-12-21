@@ -13,10 +13,10 @@ namespace VinylManager.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        [MaxLength(100), Unique (Name = "IDX_Artiste"), NotNull]
+        [MaxLength(100), Unique(Name = "IDX_Artiste"), NotNull, Collation("NOCASE")]
         public string Nom { get; set; }
 
-        [MaxLength(100)]
+        [MaxLength(100), Collation("NOCASE")]
         public string Nationalite { get; set; }
 
         public int singleCounter { get; set; }

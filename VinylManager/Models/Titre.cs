@@ -13,7 +13,7 @@ namespace VinylManager.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        [MaxLength(100), Unique(Name="IDX_FACE"), NotNull]
+        [MaxLength(100), Unique(Name = "IDX_FACE"), NotNull, Collation("NOCASE")]
         public string Nom { get; set; }
 
         [MaxLength(10), Unique(Name = "IDX_FACE")]

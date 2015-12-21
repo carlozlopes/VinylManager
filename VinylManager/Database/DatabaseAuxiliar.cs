@@ -1,7 +1,8 @@
-﻿using SQLiteNetExtensions.Extensions;
+﻿using VinylManager.Utils;
+using VinylManager.Models;
+using SQLiteNetExtensions.Extensions;
 using SQLite;
 using System.Diagnostics;
-using VinylManager.Models;
 using System.IO;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace VinylManager.Database
 {
     public class DatabaseAuxiliar
     {
+
         public string DBPath { get; set; }
         public SQLiteConnection conn { get; set; }
 
@@ -136,10 +138,10 @@ namespace VinylManager.Database
                     }
                     Inventaire inventaire = new Inventaire();
                     inventaire.DisqueId = single.Id;
-                    inventaire.Etat = "Excellent";
-                    inventaire.Couleur = "Noir";
-                    inventaire.EtatPochette = "Excellente";
-                    inventaire.TypeId = 1;
+                    inventaire.Etat = InventaryConstants.DEFAULT_VINYL_STATE;
+                    inventaire.Couleur = InventaryConstants.DEFAULT_VINYL_COLOR;
+                    inventaire.EtatPochette = InventaryConstants.DEFAULT_POCHETTE_STATE;
+                    inventaire.TypeId = InventaryConstants.SINGLE_TYPE;
                     this.conn.Insert(inventaire);
                     single.ArtisteId = artiste.Id;
                     this.conn.Update(single);
@@ -219,10 +221,10 @@ namespace VinylManager.Database
                     }
                     Inventaire inventaire = new Inventaire();
                     inventaire.DisqueId = quatreT.Id;
-                    inventaire.Etat = "Excellent";
-                    inventaire.Couleur = "Noir";
-                    inventaire.EtatPochette = "Excellente";
-                    inventaire.TypeId = 2;
+                    inventaire.Etat = InventaryConstants.DEFAULT_VINYL_STATE;
+                    inventaire.Couleur = InventaryConstants.DEFAULT_VINYL_COLOR;
+                    inventaire.EtatPochette = InventaryConstants.DEFAULT_POCHETTE_STATE;
+                    inventaire.TypeId = InventaryConstants.QUATRE_TYPE;
                     this.conn.Insert(inventaire);
                     quatreT.ArtisteId = artiste.Id;
                     this.conn.Update(quatreT);
@@ -285,10 +287,10 @@ namespace VinylManager.Database
                     this.conn.Insert(trente3t);
                     Inventaire inventaire = new Inventaire();
                     inventaire.DisqueId = trente3t.Id;
-                    inventaire.Etat = "Excellent";
-                    inventaire.Couleur = "Noir";
-                    inventaire.EtatPochette = "Excellente"; 
-                    inventaire.TypeId = 1;
+                    inventaire.Etat = InventaryConstants.DEFAULT_VINYL_STATE;
+                    inventaire.Couleur = InventaryConstants.DEFAULT_VINYL_COLOR;
+                    inventaire.EtatPochette = InventaryConstants.DEFAULT_POCHETTE_STATE;
+                    inventaire.TypeId = InventaryConstants.TRENTE_TROIS_TYPE;
                     this.conn.Insert(inventaire);
                     trente3t.ArtisteId = artiste.Id;
                     this.conn.Update(trente3t);
