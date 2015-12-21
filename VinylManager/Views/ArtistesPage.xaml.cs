@@ -33,6 +33,7 @@ namespace VinylManager.Views
         public ArtistesPage()
         {
             this.InitializeComponent();
+            desactivateEditControlsAndResetTopBar();
         }
 
         private void SearchBox_QuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
@@ -96,14 +97,14 @@ namespace VinylManager.Views
         private async void DeleteArtiste_Click(object sender, RoutedEventArgs e)
         {
             topButtonBarClicked();
-            MessageDialog message = new MessageDialog("Do you want to delete the selected artist?");
+            MessageDialog message = new MessageDialog("Etes-vous sûr de vouloir effacer l'artiste sélectionné?");
 
             message.Commands.Add(new UICommand(
-                "OK",
+                "OUI",
                 new UICommandInvokedHandler(this.AcceptDeleteEventHandler)));
 
             message.Commands.Add(new UICommand(
-                "NO",
+                "NON",
                 new UICommandInvokedHandler(this.CancelDeleteEventHandler)));
 
             // Set the command that will be invoked by default
@@ -187,8 +188,8 @@ namespace VinylManager.Views
 
         private void activateEditControls()
         {
-            Nom.IsEnabled = true;
-            Nationalite.IsEnabled = true;
+            Nom.IsReadOnly = false;
+            Nationalite.IsReadOnly = false;
             interpreteRadioButton.IsEnabled = true;
             compositeurRadioButton.IsEnabled = true;
             auteurRadioButton.IsEnabled = true;
@@ -201,9 +202,9 @@ namespace VinylManager.Views
             EditArtiste.IsEnabled = false;
             EditArtiste.IsChecked = false;
             DeleteArtiste.IsEnabled = false;
-            Nom.IsEnabled = false;
+            Nom.IsReadOnly = true;
             Nom.Text = "";
-            Nationalite.IsEnabled = false;
+            Nationalite.IsReadOnly = true;
             Nationalite.Text = "";
             interpreteRadioButton.IsEnabled = false;
             interpreteRadioButton.IsChecked = false;
@@ -246,7 +247,7 @@ namespace VinylManager.Views
 
         private async void selectAtLeastOneQualiteMessage()
         {
-            MessageDialog message = new MessageDialog("Select at least one qualité");
+            MessageDialog message = new MessageDialog("Merci de séléctionner au moins une qualité");
             await message.ShowAsync();
         }
 
