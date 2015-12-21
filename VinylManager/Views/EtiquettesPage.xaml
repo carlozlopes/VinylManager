@@ -148,7 +148,7 @@
                     </StackPanel>
                     <StackPanel>
                         <ListView SelectionMode="Single"
-                                     Height="400"
+                                     Height="335"
                                      ItemsSource="{Binding}"
                                      SelectionChanged="ArtistesListView_SelectionChanged"
                                      IsItemClickEnabled="False"
